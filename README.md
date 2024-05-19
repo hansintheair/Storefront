@@ -32,4 +32,4 @@
 1. Start XAMPP Apache server
 2. In Netbeans, right-click the Home.php file and select "run"  
     The start page to the Storefront project should open on your browser.  
-    You should NOT see a 404 error.
+    You should NOT see a 404 or any other error.
