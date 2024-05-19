@@ -13,7 +13,6 @@ $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
 //echo "PASSWORD: ".$password."<br>";  //DEBUG
 //echo "EMAIL: ".$email."<br>";  //DEBUG
 
-
 // Check if user is already in the database
 $store_db->connect();
 $exists = $store_db->checkUserExists($email);
