@@ -5,36 +5,26 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Battleships</title>
+        <title>Create Your Big4Shopping Account</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="errors.css">
     </head>
-    
     <body>
         
-        <h1>Big4Shopping</h1>
+        <h1>Create Your Big4Shopping Account</h1>
         
         <div>
-            
-            <form action="LoginHandler.php" method="post">
+            <form action="CreateAccountHandler.php" method="post">
                 E-mail: <input type="email" name="email" required><br>
                 Password: <input type="password" name="password" required><br>
                 <input type="submit">
-                <span id="error"><?php echo isset($_SESSION['login_error']) ? $_SESSION['login_error'] : "";?></span>
+                <span id="error"><?php echo isset($_SESSION['register_error']) ? $_SESSION['register_error'] : "";?></span>
             </form>
         </div>
         
-        <div>
-            <h3>Don't have an account?</h3>
-            <button type="button" onclick="location.href='\CreateAccount.php'">Create Account</button>
+        <div id="registered">
+            <?php echo isset($_SESSION['register_success']) ? "Successfully registered" : "";?>
         </div>
         
-        <?php
-            session_unset();
-            session_destroy();
-        ?>
-        
     </body>
-    
 </html>
-

@@ -53,12 +53,22 @@ class StoreDB {
         }
     }
     
-    function getUser($username) {
-        $query = "SELECT `id_user` AS `USER_UID`, `username` AS `USERNAME`, `first_name` AS `FIRST_NAME`, `middle_name` AS `MIDDLE_NAME`, `last_name` AS `LAST_NAME`, `email` AS `EMAIL`, `password` AS `PASSWORD` FROM `storefront`.`entity_users` AS `entity_users` WHERE `username` = '".$username."'";
-    
-        return $result = $this->db->query($query)->fetch_assoc();
+    function checkUserExists($email) {
+        $query = "SELECT * FROM `storefront`.`entity_users` AS `entity_users` WHERE `email` = '".$email."'";
+
+        return (bool)$this->db->query($query)->fetch_assoc();
     }
     
+    function getUser($email) {
+        $query = "SELECT `id_user` AS `USER_UID`, `email` AS `EMAIL`, `password` AS `PASSWORD` FROM `storefront`.`entity_users` AS `entity_users` WHERE `email` = '".$email."'";
     
+        return $this->db->query($query)->fetch_assoc();
+    }
+    
+    function addUser($email, $password) {
+        $query = "INSERT INTO `storefront`.`entity_users` (`email`, `password`) VALUES ('".$email."', '".$password."')";
+        
+        $this->db->query($query);
+    }
 
 }
