@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `storefront` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+USE `storefront`;
 -- MariaDB dump 10.19  Distrib 10.4.32-MariaDB, for Win64 (AMD64)
 --
 -- Host: 127.0.0.1    Database: storefront
@@ -150,14 +152,10 @@ DROP TABLE IF EXISTS `entity_users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `entity_users` (
   `id_user` mediumint(7) NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) DEFAULT NULL,
-  `first_name` varchar(50) DEFAULT NULL,
-  `middle_name` varchar(50) DEFAULT NULL,
-  `last_name` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `password` varchar(16) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -166,7 +164,7 @@ CREATE TABLE `entity_users` (
 
 LOCK TABLES `entity_users` WRITE;
 /*!40000 ALTER TABLE `entity_users` DISABLE KEYS */;
-INSERT INTO `entity_users` VALUES (1,'hansintheair','Hannes','M.','Ziegler','hansintheair@email.com',NULL),(2,'lehrprof','Mark',NULL,'Lehr','mlehr@rcc.edu',NULL);
+INSERT INTO `entity_users` VALUES (8,'hansintheair@email.com','$2y$10$ok101JjiFWgTyAF5mvGPj.NQo1hxVtEKZzOoklhGnHnNBfcVTILWe');
 /*!40000 ALTER TABLE `entity_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -244,10 +242,6 @@ LOCK TABLES `xref_users_orders` WRITE;
 INSERT INTO `xref_users_orders` VALUES (1,1,1);
 /*!40000 ALTER TABLE `xref_users_orders` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping routines for database 'storefront'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -258,4 +252,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-18 14:38:26
+-- Dump completed on 2024-05-20 19:09:51
