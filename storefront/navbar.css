@@ -35,14 +35,16 @@
 .navbar div input {
     width: 500px;
     padding: 8px 10px 8px 5px;
-    margin: 0;
+    margin: auto;
     box-sizing: border-box;
 }
 
-.navbar .logout {
-    
+.navbar .account {
+    position: absolute;
+    right: 10px;
+    margin: auto;
 }
 
-.active {
+.navbar .active {
     background-color: red;
 }
