@@ -16,7 +16,7 @@
         <div>
             <form action="CreateAccountHandler.php" method="post">
                 E-mail: <input type="email" name="email" required><br>
-                Password: <input type="password" name="password" required><br>
+                Password: <input type="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$%*?&])[A-Za-z\\d@$%*?&]{8,}$" title="Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character @$%*? or &" required><br>
                 <input type="submit" value="Register">
                 <span id="error"><?php echo isset($_SESSION['register_error']) ? $_SESSION['register_error'] : "";?></span>
             </form>
