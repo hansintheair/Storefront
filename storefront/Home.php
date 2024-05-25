@@ -28,11 +28,6 @@
             <button type="button" onclick="location.href='\CreateAccount.php'">Create Account</button>
         </div>
         
-        <?php
-            session_unset();
-            session_destroy();
-        ?>
-        
     </body>
     
 </html>

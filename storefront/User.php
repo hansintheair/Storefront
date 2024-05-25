@@ -1,3 +1,12 @@
+<?php
+    session_start();
+    
+    // Redirect to login page if no no user session
+    if (!isset($_SESSION["user_id"])) {
+        header("Location: Home.php");
+    }
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,7 +28,7 @@
             </div>
             <div class="account">
                 <div><a href="#profile">Profile</a></div>
-                <div class="logout"><a href="#logout">Logout</a></div>
+                <div class="logout"><a href="LogoutHandler.php">Logout</a></div>
             </div>
             
         </div>

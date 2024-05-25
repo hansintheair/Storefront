@@ -25,6 +25,7 @@ if (!($userdata["EMAIL"] == $email && password_verify($password, $userdata["PASS
 // Login redirect
 // User login
 if ($userdata["TYPE"] == 0) {
+    $_SESSION["user_id"] = $userdata["USER_UID"];
     header("Location: User.php");
 }
 // Admin login
