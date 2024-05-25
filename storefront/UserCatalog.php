@@ -1,14 +1,10 @@
 <?php
-    session_start();
-    
-    // Redirect to login page if no no user session
-    if (!isset($_SESSION["user_id"])) {
-        header("Location: Home.php");
-    }
+    include "SecureSession.php";
 ?>
 
 <!DOCTYPE html>
 <html>
+    
     <head>
         <title>User Profile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -19,9 +15,7 @@
     
     <body>
         
-        <div class="navbar">
-            <?php include 'UserNavbar.php';?>
-        </div>
+        <?php include 'UserNavbar.php';?>
         
         <div class="items_pane">
             <div class="sidebar"></div>
