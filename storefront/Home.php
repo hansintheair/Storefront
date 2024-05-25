@@ -16,7 +16,7 @@
         
         <div>
             <form action="LoginHandler.php" method="post">
-                E-mail: <input type="email" name="email" pattern="^[_A-Za-z0-9-]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"  required><br>
+                E-mail: <input type="email" name="email" pattern="^[A-Za-z0-9._\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$" title="invalid email address format" required><br>
                 Password: <input type="password" name="password" required><br>
                 <input type="submit" value="Log in">
                 <span id="error"><?php echo isset($_SESSION['login_error']) ? $_SESSION['login_error'] : "";?></span>

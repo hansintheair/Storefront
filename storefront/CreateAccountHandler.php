@@ -22,7 +22,7 @@ if (!preg_match($pword_pattern, $password)) {
 }
 
 // Validate email format
-$email_pattern = "^[_A-Za-z0-9-]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$";
+$email_pattern = "/^[A-Za-z0-9._\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$/";
 if (!preg_match($email_pattern, $email)) {
     $_SESSION["register_error"] = "invalid e-mail format";
     header("Location: CreateAccount.php");
@@ -53,7 +53,7 @@ $store_db->addUser($email, $password_hashed);
 $store_db->disconnect();
 
 $_SESSION["register_success"] = true;
-$_SERVER["register_error"] = "";
+unset($_SESSION["register_error"]);
 header("Location: CreateAccount.php");
 
  

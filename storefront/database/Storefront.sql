@@ -154,8 +154,9 @@ CREATE TABLE `entity_users` (
   `id_user` mediumint(7) NOT NULL AUTO_INCREMENT,
   `email` varchar(50) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
+  `type` tinyint(3) DEFAULT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -164,7 +165,7 @@ CREATE TABLE `entity_users` (
 
 LOCK TABLES `entity_users` WRITE;
 /*!40000 ALTER TABLE `entity_users` DISABLE KEYS */;
-INSERT INTO `entity_users` VALUES (8,'hansintheair@email.com','$2y$10$ok101JjiFWgTyAF5mvGPj.NQo1hxVtEKZzOoklhGnHnNBfcVTILWe');
+INSERT INTO `entity_users` VALUES (8,'hansintheair@email.com','$2y$10$ok101JjiFWgTyAF5mvGPj.NQo1hxVtEKZzOoklhGnHnNBfcVTILWe',0);
 /*!40000 ALTER TABLE `entity_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -214,7 +215,7 @@ CREATE TABLE `xref_users_cartitems` (
 
 LOCK TABLES `xref_users_cartitems` WRITE;
 /*!40000 ALTER TABLE `xref_users_cartitems` DISABLE KEYS */;
-INSERT INTO `xref_users_cartitems` VALUES (1,1,1),(2,1,2),(3,2,3);
+INSERT INTO `xref_users_cartitems` VALUES (1,8,1),(2,8,2),(3,8,3);
 /*!40000 ALTER TABLE `xref_users_cartitems` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -228,7 +229,7 @@ DROP TABLE IF EXISTS `xref_users_orders`;
 CREATE TABLE `xref_users_orders` (
   `id_user_orders` mediumint(7) NOT NULL AUTO_INCREMENT,
   `id_user` mediumint(7) DEFAULT NULL,
-  `id_oder` mediumint(7) DEFAULT NULL,
+  `id_order` mediumint(7) DEFAULT NULL,
   PRIMARY KEY (`id_user_orders`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -252,4 +253,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-20 19:09:51
+-- Dump completed on 2024-05-25 13:07:19
