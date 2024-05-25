@@ -22,8 +22,19 @@
             
         </div>
         
-        <div class="items">
-            
+        <div class="items_pane">
+            <div class="sidebar"></div>
+            <div class="items_list">
+                <script>
+                    document.innerHTML = fetch("DisplayCatalog.php")
+                        .then(response => response.json()
+                        .then(data => {
+                                document.querySelector(".items_list").innerHTML = JSON.stringify(data, null, 2);
+                            }
+                        )
+                    );
+                </script>
+            </div>
         </div>
         
     </body>

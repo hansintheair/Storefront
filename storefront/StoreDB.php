@@ -26,31 +26,31 @@ class StoreDB {
             $this->db_name
         );
         
-        echo "Connecting to ".$this->db_name."... ";
+//        echo "Connecting to ".$this->db_name."... ";
         
         // Check connection
-        if ($this->db->connect_error) {
-            die("Connection failed<br>".$this->db->connect_error);
-        }
+//        if ($this->db->connect_error) {
+//            die("Connection failed<br>".$this->db->connect_error);
+//        }
         
-        echo "Succeeded<br>";
+//        echo "Succeeded<br>";
     }
     
     function disconnect() {
         
-        echo "Disconnecting from ".$this->db_name."... ";
+//        echo "Disconnecting from ".$this->db_name."... ";
 
         if (!$this->db) {
-            echo "Nothing to disconnect.<br>";
+//            echo "Nothing to disconnect.<br>";
             return;
         }
         
-        if ($this->db->close()) {
-            echo "Succeeded<br>";
-        }
-        else {
-            echo "Failed<br>";
-        }
+//        if ($this->db->close()) {
+//            echo "Succeeded<br>";
+//        }
+//        else {
+//            echo "Failed<br>";
+//        }
     }
     
     function checkUserExists($email) {
@@ -69,6 +69,12 @@ class StoreDB {
         $query = "INSERT INTO `".$this->db_name."`.`entity_users` (`email`, `password`) VALUES ('".$email."', '".$password."')";
         
         $this->db->query($query);
+    }
+    
+    function getCatalog() {
+        $query = "SELECT `entity_items`.`name` AS `NAME`, `entity_items`.`desc` AS `DESC`, `entity_catalogitems`.`price` AS `PRICE`, `entity_catalogitems`.`quant` AS `QUANT` FROM `".$this->db_name."`.`entity_catalogitems` AS `entity_catalogitems`, `".$this->db_name."`.`entity_items` AS `entity_items` WHERE `entity_catalogitems`.`id_catalogitem` = `entity_items`.`id_catalogitem`";
+        
+        return $this->db->query($query)->fetch_all();
     }
 
 }
