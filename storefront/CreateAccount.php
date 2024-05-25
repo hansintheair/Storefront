@@ -23,7 +23,7 @@
         
         <div id="registered">
             <p><?php echo isset($_SESSION["register_success"]) ? "Successfully registered" : "";?></p>
-            <span>Already have an account?</span> <a href="Home.php">Sign in</a>
+            <span>Already have an account?</span> <a href="Home.php">Log in</a>
         </div>
         
     </body>
