@@ -4,6 +4,7 @@
         <title>User Profile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="navbar.css">
+        <script type="text/javascript" src="ItemDisplay.js"></script>
     </head>
     
     <body>
@@ -26,23 +27,7 @@
             <div class="sidebar"></div>
             <div class="items_list">
                 <script>
-                    document.innerHTML = fetch("DisplayCatalog.php")
-                        .then(response => response.json()
-                        .then(data => {
-                                const ul = document.createElement("ul");
-                                ul.class = "catalog_list";
-                                
-                                data.forEach(item => {
-                                        const li = document.createElement("li");
-                                        li.class = "catalog_item";
-                                        li.textContent = item[0];
-                                        ul.appendChild(li);
-                                    }
-                                );
-                                document.querySelector(".items_list").appendChild(ul);
-                            }
-                        )
-                    );
+                    getCatalogDisplay();
                 </script>
             </div>
         </div>
