@@ -10,7 +10,7 @@
         
         <div class="navbar">
             <div class="shopping">
-                <div class="active"><a href="#about">Home</a></div>
+                <div class="active"><a href="#about">Shop</a></div>
                 <div class="searchbar"><input type="text" placeholder="Search..."></div>
                 <div><a href="#cart">Cart</a></div>
                 <div><a href="#orders">Orders</a></div>
@@ -29,7 +29,17 @@
                     document.innerHTML = fetch("DisplayCatalog.php")
                         .then(response => response.json()
                         .then(data => {
-                                document.querySelector(".items_list").innerHTML = JSON.stringify(data, null, 2);
+                                const ul = document.createElement("ul");
+                                ul.class = "catalog_list";
+                                
+                                data.forEach(item => {
+                                        const li = document.createElement("li");
+                                        li.class = "catalog_item";
+                                        li.textContent = item[0];
+                                        ul.appendChild(li);
+                                    }
+                                );
+                                document.querySelector(".items_list").appendChild(ul);
                             }
                         )
                     );
