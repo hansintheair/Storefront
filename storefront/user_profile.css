@@ -1,0 +1,20 @@
+#profile_options, #profile_info {
+    background-color: #f4f3f0;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+#profile_options h3, #profile_info h3 {
+    margin-top: 0px;
+}
+
+#profile_options ul {
+    list-style-type: none;
+    padding: 0px;
+    overflow: hidden;
+}
+#dangerzone {
+    margin-bottom: 6px;
+    color:red;
+}
