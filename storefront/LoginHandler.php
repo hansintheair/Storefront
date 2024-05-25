@@ -23,8 +23,12 @@ if (!($userdata["EMAIL"] == $email && password_verify($password, $userdata["PASS
 }
 
 // Login redirect
-$_SESSION["login_error"] = "WOHOO! PASSWORD VERIFIED!";  //DEBUG
-header("Location: Home.php");  //DEBUG
-//header("Location: User.php");  //NOT IMPLEMENTED
-
+// User login
+if ($userdata["TYPE"] == 0) {
+    header("Location: User.php");
+}
+// Admin login
+else {
+    //header("Location: Admin.php");  //NOT IMPLEMENTED
+}
 

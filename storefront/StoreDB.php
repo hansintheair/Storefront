@@ -60,7 +60,7 @@ class StoreDB {
     }
     
     function getUser($email) {
-        $query = "SELECT `id_user` AS `USER_UID`, `email` AS `EMAIL`, `password` AS `PASSWORD` FROM `".$this->db_name."`.`entity_users` AS `entity_users` WHERE `email` = '".$email."'";
+        $query = "SELECT `id_user` AS `USER_UID`, `email` AS `EMAIL`, `password` AS `PASSWORD`, `type` AS `TYPE` FROM `".$this->db_name."`.`entity_users` AS `entity_users` WHERE `email` = '".$email."'";
     
         return $this->db->query($query)->fetch_assoc();
     }

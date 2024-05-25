@@ -1,0 +1,48 @@
+.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background-color: #333;
+}
+
+.navbar div {
+    display: flex;
+    align-items: center;
+}
+
+.navbar div a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    height: auto;
+}
+
+.navbar div a:hover {
+    background-color: #111;
+    height: auto;
+}
+
+.navbar .searchbar {
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.navbar div input {
+    width: 500px;
+    padding: 8px 10px 8px 5px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.navbar .logout {
+    
+}
+
+.active {
+    background-color: red;
+}
