@@ -17,7 +17,7 @@
     padding: 15px;
 }
 
-.item_name {
+#item_name {
     margin-top: 0px;
 }
 
@@ -29,7 +29,7 @@
     margin-right: 8px;
 }
 
-.item_stock {
+#item_stock {
     margin-left: 10px;
     color: gray;
 }

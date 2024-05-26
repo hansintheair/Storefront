@@ -14,19 +14,19 @@ function getCatalogDisplay() {
                         li.appendChild(div);
                         
                         const name = document.createElement("h3");
-                        name.className = "item_name";
+                        name.id = "item_name";
                         name.textContent = item[0];
                         
                         const desc = document.createElement("p");
-                        desc.className = "item_desc";
+                        desc.id = "item_desc";
                         desc.textContent = item[1];
                         
                         const price = document.createElement("span");
-                        price.className = "item_price";
+                        price.id = "item_price";
                         price.textContent = "$" + item[2];
                         
                         const stock = document.createElement("span");
-                        stock.className = "item_stock";
+                        stock.id = "item_stock";
                         const stock_val = item[3];
                         if (stock_val > 25) {
                             stock.textContent = "In Stock";
@@ -72,11 +72,11 @@ function getCartDisplay() {
                         // Item name and description
                         
                         const name = document.createElement("h3");
-                        name.className = "item_name";
+                        name.id = "item_name";
                         name.textContent = item[0];
                         
                         const desc = document.createElement("p");
-                        desc.className = "item_desc";
+                        desc.id = "item_desc";
                         desc.textContent = item[1];
                         
                         // Price and stock info
@@ -85,11 +85,11 @@ function getCartDisplay() {
                         price_stock.id = "price_stock";
                         
                         const price = document.createElement("span");
-                        price.className = "item_price";
+                        price.id = "item_price";
                         price.textContent = "$" + item[2];
                                                
                         const stock = document.createElement("span");
-                        stock.className = "item_stock";
+                        stock.id = "item_stock";
                         const stock_val = item[3];
                         if (stock_val > 25) {
                             stock.textContent = "In Stock";
@@ -113,13 +113,13 @@ function getCartDisplay() {
 
                         const quant = document.createElement("select");
                         quant.id = "item_quant";
-                        quant.value = item[4];
                         for (let i = 1; i <= 25; i++) {
                             const option = document.createElement("option");
                             option.value = i;
                             option.text = i;
                             quant.add(option);
                         }
+                        quant.value = item[4];
                         
                         quant_select.appendChild(quant_label);
                         quant_select.appendChild(quant);
