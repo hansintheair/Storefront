@@ -1,4 +1,50 @@
 
+function createItemBaseContents(li, item) {
+    // Create div to hold item card parts
+                        
+    const div = document.createElement("div");
+
+    // Item name and description
+
+    const name = document.createElement("h3");
+    name.id = "item_name";
+    name.textContent = item[0];
+
+    const desc = document.createElement("p");
+    desc.id = "item_desc";
+    desc.textContent = item[1];
+    
+    // Price and stock info
+                        
+    const price_stock = document.createElement("p");
+    price_stock.id = "price_stock";
+
+    const price = document.createElement("span");
+    price.id = "item_price";
+    price.textContent = "$" + item[2];
+
+    const stock = document.createElement("span");
+    stock.id = "item_stock";
+    const stock_val = item[3];
+    if (stock_val > 25) {
+        stock.textContent = "In Stock";
+    } else if (stock_val > 0) {
+        stock.textContent = "Only " + stock_val + " left!";
+    } else {
+        stock.textContent = "Out of Stock";
+    }
+
+    price_stock.appendChild(price);
+    price_stock.appendChild(stock);
+    
+    // Compose div from parts & return it
+    div.appendChild(name);
+    div.appendChild(desc);
+    div.appendChild(price_stock);
+    
+    return div;
+}
+
 function getCatalogDisplay() {
         fetch("DisplayCatalogController.php")
         .then(response => response.json()
@@ -10,37 +56,9 @@ function getCatalogDisplay() {
                         const li = document.createElement("li");
                         li.className = "catalog_item";
                         
-                        const div = document.createElement("div");
+                        const div = createItemBaseContents(li, item);
+
                         li.appendChild(div);
-                        
-                        const name = document.createElement("h3");
-                        name.id = "item_name";
-                        name.textContent = item[0];
-                        
-                        const desc = document.createElement("p");
-                        desc.id = "item_desc";
-                        desc.textContent = item[1];
-                        
-                        const price = document.createElement("span");
-                        price.id = "item_price";
-                        price.textContent = "$" + item[2];
-                        
-                        const stock = document.createElement("span");
-                        stock.id = "item_stock";
-                        const stock_val = item[3];
-                        if (stock_val > 25) {
-                            stock.textContent = "In Stock";
-                        } else if (stock_val > 0) {
-                            stock.textContent = "Only " + stock_val + " left!";
-                        } else {
-                            stock.textContent = "Out of Stock";
-                        }
-                        
-                        div.appendChild(name);
-                        div.appendChild(desc);
-                        div.appendChild(price);
-                        div.appendChild(stock);
-                        
                         ul.appendChild(li);
                     }
                 );
@@ -64,43 +82,7 @@ function getCartDisplay() {
                         const li = document.createElement("li");
                         li.className = "catalog_item";
                         
-                        // Create div to hold item card parts
-                        
-                        const div = document.createElement("div");
-                        li.appendChild(div);
-                        
-                        // Item name and description
-                        
-                        const name = document.createElement("h3");
-                        name.id = "item_name";
-                        name.textContent = item[0];
-                        
-                        const desc = document.createElement("p");
-                        desc.id = "item_desc";
-                        desc.textContent = item[1];
-                        
-                        // Price and stock info
-                        
-                        const price_stock = document.createElement("p");
-                        price_stock.id = "price_stock";
-                        
-                        const price = document.createElement("span");
-                        price.id = "item_price";
-                        price.textContent = "$" + item[2];
-                                               
-                        const stock = document.createElement("span");
-                        stock.id = "item_stock";
-                        const stock_val = item[3];
-                        if (stock_val > 25) {
-                            stock.textContent = "In Stock";
-                        } else if (stock_val > 0) {
-                            stock.textContent = "Only " + stock_val + " left!";
-                        } else {
-                            stock.textContent = "Out of Stock";
-                        }
-                        
-                        price_stock.appendChild(price);
-                        price_stock.appendChild(stock);
+                        const div = createItemBaseContents(li, item);
                         
                         // Quantity selection
                         
@@ -134,19 +116,17 @@ function getCartDisplay() {
                         const quant_remove = document.createElement("div");
                         quant_remove.id = "quant_remove";
                         
-                        
                         quant_remove.appendChild(quant_select);
                         quant_remove.appendChild(remove);
                         
                         // Compose the item card from its parts
                         
-                        div.appendChild(name);
-                        div.appendChild(desc);
-                        div.appendChild(price_stock);
+                        
                         div.appendChild(quant_remove);
                         
                         // Compose the list of items
                         
+                        li.appendChild(div);
                         ul.appendChild(li);
                     }
                 );
