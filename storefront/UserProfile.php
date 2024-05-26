@@ -9,9 +9,10 @@
         <title>User Profile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <script type="text/javascript" src="UserProfileController.js"></script>
+        <script type="text/javascript" src="messages.js"></script>
         <link rel="stylesheet" href="navbar.css">
         <link rel="stylesheet" href="user_profile.css">
-        <link rel="stylesheet" href="errors.css">
+        <link rel="stylesheet" href="messages.css">
     </head>
     
     <body>
@@ -39,7 +40,7 @@
                             <input name="email" type="email" placeholder="New Email" pattern="^[A-Za-z0-9._\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$" title="invalid email address format" required>
                             <button type="submit">Save Changes</button>
                             <span class="error"><?php echo isset($_SESSION["email_update_error"]) ? $_SESSION["email_update_error"] : "";?></span>
-                            <span><?php echo isset($_SESSION["email_update_success"]) ? "Successfully registered" : "";?></span>
+                            <span class="success"><?php echo isset($_SESSION["email_update_success"]) ? "Successfully registered" : "";?></span>
                         </form>
                     </div>
                 </li>
@@ -61,6 +62,11 @@
                 document.addEventListener("DOMContentLoaded", getUserData());
             </script>
         </div>
+        
+        <script>
+            successMessageTimeout();
+            errorMessageTimeout();
+        </script>
         
         <?php
             unset($_SESSION["email_update_error"]);    

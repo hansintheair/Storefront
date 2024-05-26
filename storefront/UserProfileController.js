@@ -8,8 +8,3 @@ function getUserData() {
         )
     );
 }
-
-function showChangeEmailForm() {
-    
-}
-
