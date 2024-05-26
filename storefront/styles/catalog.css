@@ -3,15 +3,15 @@
     list-style-type: none;
 }
 
-.catalog_list{
+.catalog_list, .cart_list{
     display: grid;
     grid-template-columns: repeat(4, minmax(200px, 1fr));
-    grid-template-rows: repeat(4, 150px);
+    grid-template-rows: repeat(4, 200px);
     gap: 20px;
     padding: 10px;
 }
 
-.catalog_item {
+.catalog_item, .cart_item {
     background-color: #f4f3f0;
     border-radius: 8px;
     padding: 15px;
@@ -21,7 +21,15 @@
     margin-top: 0px;
 }
 
-.item_quant {
+#item_quant {
+    width: 42px;
+}
+
+#quant_label {
+    margin-right: 8px;
+}
+
+.item_stock {
     margin-left: 10px;
     color: gray;
 }
