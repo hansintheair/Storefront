@@ -6,7 +6,7 @@
 .catalog_list, .cart_list{
     display: grid;
     grid-template-columns: repeat(4, minmax(200px, 1fr));
-    grid-template-rows: repeat(4, 200px);
+    grid-template-rows: repeat(4, 170px);
     gap: 20px;
     padding: 10px;
 }
@@ -32,4 +32,14 @@
 #item_stock {
     margin-left: 10px;
     color: gray;
+}
+
+#quant_remove {
+    display: flex;
+    justify-content: space-between;
+}
+
+#remove {
+    position: absolute;
+    right: 10px;
 }

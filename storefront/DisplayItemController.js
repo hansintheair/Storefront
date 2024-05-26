@@ -124,12 +124,26 @@ function getCartDisplay() {
                         quant_select.appendChild(quant_label);
                         quant_select.appendChild(quant);
                         
+                        // Remove from cart option
+                        const remove = document.createElement("button");
+                        remove.id = "remove_item";
+                        remove.textContent = "Remove";
+                        
+                        // Div to hold quantity selection and remove from cart option
+                        
+                        const quant_remove = document.createElement("div");
+                        quant_remove.id = "quant_remove";
+                        
+                        
+                        quant_remove.appendChild(quant_select);
+                        quant_remove.appendChild(remove);
+                        
                         // Compose the item card from its parts
                         
                         div.appendChild(name);
                         div.appendChild(desc);
                         div.appendChild(price_stock);
-                        div.appendChild(quant_select);
+                        div.appendChild(quant_remove);
                         
                         // Compose the list of items
                         
