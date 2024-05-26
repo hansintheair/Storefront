@@ -34,12 +34,12 @@
     color: gray;
 }
 
-#quant_remove {
+#quant_option {
     display: flex;
     justify-content: space-between;
 }
 
-#remove {
+#remove_item #add_item {
     position: absolute;
     right: 10px;
 }

@@ -56,7 +56,47 @@ function getCatalogDisplay() {
                         const li = document.createElement("li");
                         li.className = "catalog_item";
                         
+                        // Create & fill base item div contents
                         const div = createItemBaseContents(li, item);
+                        
+                        // Quantity selection
+                        
+                        const quant_select = document.createElement("div");
+                        quant_select.id = "quant_select";
+                        
+                        const quant_label = document.createElement("span");
+                        quant_label.id = "quant_label";
+                        quant_label.textContent = "Quantity:";
+
+                        const quant = document.createElement("select");
+                        quant.id = "item_quant";
+                        for (let i = 1; i <= 25; i++) {
+                            const option = document.createElement("option");
+                            option.value = i;
+                            option.text = i;
+                            quant.add(option);
+                        }
+                        
+                        quant_select.appendChild(quant_label);
+                        quant_select.appendChild(quant);
+                        
+                        // Add to cart option
+                        const remove = document.createElement("button");
+                        remove.id = "add_item";
+                        remove.textContent = "Add to cart";
+                        
+                        // Create & compose div to hold quantity selection and remove from cart option
+                        
+                        const quant_option = document.createElement("div");
+                        quant_option.id = "quant_option";
+                        
+                        quant_option.appendChild(quant_select);
+                        quant_option.appendChild(remove);
+                        
+                        // Compose the item card from its parts
+                        div.appendChild(quant_option);
+                        
+                        // Compose the list of items
 
                         li.appendChild(div);
                         ul.appendChild(li);
@@ -78,10 +118,10 @@ function getCartDisplay() {
                 data.forEach(item => {
                     
                         // Create list item to hold item card
-                        
                         const li = document.createElement("li");
                         li.className = "catalog_item";
                         
+                        // Create & fill base item div contents
                         const div = createItemBaseContents(li, item);
                         
                         // Quantity selection
@@ -111,21 +151,18 @@ function getCartDisplay() {
                         remove.id = "remove_item";
                         remove.textContent = "Remove";
                         
-                        // Div to hold quantity selection and remove from cart option
+                        // Create & compose div to hold quantity selection and remove from cart option
                         
-                        const quant_remove = document.createElement("div");
-                        quant_remove.id = "quant_remove";
+                        const quant_option = document.createElement("div");
+                        quant_option.id = "quant_option";
                         
-                        quant_remove.appendChild(quant_select);
-                        quant_remove.appendChild(remove);
+                        quant_option.appendChild(quant_select);
+                        quant_option.appendChild(remove);
                         
                         // Compose the item card from its parts
-                        
-                        
-                        div.appendChild(quant_remove);
+                        div.appendChild(quant_option);
                         
                         // Compose the list of items
-                        
                         li.appendChild(div);
                         ul.appendChild(li);
                     }
