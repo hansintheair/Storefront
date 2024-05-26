@@ -2,7 +2,7 @@
     <div class="shopping">
         <div class="active"><a href="UserCatalog.php">Shop</a></div>
         <div class="searchbar"><input type="text" placeholder="Search..."></div>
-        <div class="cart"><a href="#cart">Cart</a></div>
+        <div class="cart"><a href="UserCart.php">Cart</a></div>
         <div class="orders"><a href="#orders">Orders</a></div>
     </div>
     <div class="account">
