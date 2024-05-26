@@ -1,5 +1,5 @@
 <?php
-    include "SecureSession.php"
+    include "SecureSessionComponent.php"
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +17,7 @@
     
     <body>
         
-        <?php include 'UserNavbar.php';?>
+        <?php include 'UserNavbarComponent.php';?>
         <script>
             document.getElementsByClassName("searchbar")[0].style.display = "none";
             document.getElementsByClassName("cart")[0].style.display = "none";
