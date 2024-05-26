@@ -63,7 +63,7 @@ CREATE TABLE `entity_catalogitems` (
 
 LOCK TABLES `entity_catalogitems` WRITE;
 /*!40000 ALTER TABLE `entity_catalogitems` DISABLE KEYS */;
-INSERT INTO `entity_catalogitems` VALUES (1,3.99,1000000),(2,1.49,10000),(3,0.99,100000),(4,5.99,10000),(5,3.99,1000),(6,11.99,1000),(7,4.99,10000),(8,3.99,100);
+INSERT INTO `entity_catalogitems` VALUES (1,3.99,1000000),(2,1.49,10000),(3,0.99,100000),(4,5.99,10000),(5,3.99,1000),(6,11.99,1000),(7,4.99,10000),(8,3.99,100),(9,2.99,23);
 /*!40000 ALTER TABLE `entity_catalogitems` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,7 +80,7 @@ CREATE TABLE `entity_items` (
   `desc` varchar(50) DEFAULT NULL,
   `id_catalogitem` mediumint(5) DEFAULT NULL,
   PRIMARY KEY (`id_item`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +89,7 @@ CREATE TABLE `entity_items` (
 
 LOCK TABLES `entity_items` WRITE;
 /*!40000 ALTER TABLE `entity_items` DISABLE KEYS */;
-INSERT INTO `entity_items` VALUES (1,'Toothbrush','(1) generic toothbrush',1),(2,'Toothpaste','(1) generic toothpaste',2),(3,'Soap','(1) generic bar soap',3),(4,'Tissue Paper','(1) generic tissue paper',4),(5,'Shower Sponge','(1) generic shower sponge',5),(6,'Nail Clipper','(1) quality nail clipper',6),(7,'Shampoo','(1) generic shampoo',7),(8,'Apples','(6) tasy apples',8);
+INSERT INTO `entity_items` VALUES (1,'Toothbrush','(1) generic toothbrush',1),(2,'Toothpaste','(1) generic toothpaste',2),(3,'Soap','(1) generic bar soap',3),(4,'Tissue Paper','(1) generic tissue paper',4),(5,'Shower Sponge','(1) generic shower sponge',5),(6,'Nail Clipper','(1) quality nail clipper',6),(7,'Shampoo','(1) generic shampoo',7),(8,'Apples','(6) tasy apples',8),(9,'Oranges','(4) juicy oranges',9);
 /*!40000 ALTER TABLE `entity_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -253,4 +253,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-25 13:07:19
+-- Dump completed on 2024-05-26  5:04:22
