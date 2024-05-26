@@ -10,9 +10,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <script type="text/javascript" src="UserProfileController.js"></script>
         <script type="text/javascript" src="messages.js"></script>
-        <link rel="stylesheet" href="navbar.css">
-        <link rel="stylesheet" href="user_profile.css">
-        <link rel="stylesheet" href="messages.css">
+        <link rel="stylesheet" href="styles/navbar.css">
+        <link rel="stylesheet" href="styles/user_profile.css">
+        <link rel="stylesheet" href="styles/messages.css">
     </head>
     
     <body>
