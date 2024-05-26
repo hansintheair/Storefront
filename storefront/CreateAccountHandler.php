@@ -16,7 +16,7 @@ $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
 // Validate password complexity
 $pword_pattern = "((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,20})";
 if (!preg_match($pword_pattern, $password)) {
-    $_SESSION["register_error"] = "password does not meet required complexity";
+    $_SESSION["register_error"] = "Password does not meet required complexity";
     header("Location: CreateAccount.php");
     exit;
 }
@@ -24,7 +24,7 @@ if (!preg_match($pword_pattern, $password)) {
 // Validate email format
 $email_pattern = "/^[A-Za-z0-9._\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$/";
 if (!preg_match($email_pattern, $email)) {
-    $_SESSION["register_error"] = "invalid e-mail format";
+    $_SESSION["register_error"] = "Invalid e-mail format";
     header("Location: CreateAccount.php");
     exit;
 }
@@ -49,11 +49,11 @@ if (!$password) {  //TODO: Could use some extra validation
 // Store user data
 $password_hashed = password_hash($password, PASSWORD_DEFAULT);  // Hash password for security
 $store_db->connect();
-$store_db->addUser($email, $password_hashed);
+$store_db->addUser($email, $password_hashed, 0);
 $store_db->disconnect();
 
 $_SESSION["register_success"] = true;
 unset($_SESSION["register_error"]);
-//header("Location: CreateAccount.php");
+header("Location: CreateAccount.php");
 
  

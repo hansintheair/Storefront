@@ -68,7 +68,11 @@ class StoreDB {
     function setUserEmailByID($uid, $email) {
         $query = "UPDATE `".$this->db_name."`.`entity_users` SET `email`='".$email."' WHERE `id_user` = '".$uid."'";
         
-        echo "QUERY: ".$query;
+        $this->db->query($query);
+    }
+    
+    function setUserPwordByID($uid, $new_password) {
+        $query = "UPDATE `".$this->db_name."`.`entity_users` SET `password`='".$new_password."' WHERE `id_user` = '".$uid."'";
         
         $this->db->query($query);
     }
@@ -79,8 +83,8 @@ class StoreDB {
         return $this->db->query($query)->fetch_assoc();
     }
     
-    function addUser($email, $password) {
-        $query = "INSERT INTO `".$this->db_name."`.`entity_users` (`email`, `password`) VALUES ('".$email."', '".$password."')";
+    function addUser($email, $password, $type) {
+        $query = "INSERT INTO `".$this->db_name."`.`entity_users` (`email`, `password`, `type`) VALUES ('".$email."', '".$password."', '".$type."')";
         
         $this->db->query($query);
     }

@@ -47,10 +47,12 @@
                 <li>
                     <div>
                         <span>Change password</span>
-                        <form action="NOT_IMPLEMENTED" method="post">
-                            <input type="old_password" placeholder="Old Password"><br>
-                            <input type="new_password" placeholder="New Password">
+                        <form action="ChangePasswordHandler.php" method="post">
+                            <input name="old_password" type="password" placeholder="Old Password" required><br>
+                            <input name="new_password" type="password" placeholder="New Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,20})" title="Password must be at between 8 and 20 characters long, contain at least one of each: uppercase letter, lowercase letter, number, and special character !@#$%^&*" required>
                             <button type="submit">Save Changes</button>
+                            <span class="error"><?php echo isset($_SESSION["password_update_error"]) ? $_SESSION["email_update_error"] : "";?></span>
+                            <span class="success"><?php echo isset($_SESSION["password_update_success"]) ? "Successfully registered" : "";?></span>
                         </form>
                     </div>
                 </li>
@@ -71,6 +73,8 @@
         <?php
             unset($_SESSION["email_update_error"]);    
             unset($_SESSION["email_update_success"]);
+            unset($_SESSION["password_update_error"]);
+            unset($_SESSION["password_update_success"]);
         ?>
     
     </body>
