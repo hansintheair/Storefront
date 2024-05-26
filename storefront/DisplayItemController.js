@@ -8,11 +8,11 @@ function createItemBaseContents(li, item) {
 
     const name = document.createElement("h3");
     name.id = "item_name";
-    name.textContent = item[0];
+    name.textContent = item["NAME"];
 
     const desc = document.createElement("p");
     desc.id = "item_desc";
-    desc.textContent = item[1];
+    desc.textContent = item["DESC"];
     
     // Price and stock info
                         
@@ -21,11 +21,11 @@ function createItemBaseContents(li, item) {
 
     const price = document.createElement("span");
     price.id = "item_price";
-    price.textContent = "$" + item[2];
+    price.textContent = "$" + item["PRICE"];
 
     const stock = document.createElement("span");
     stock.id = "item_stock";
-    const stock_val = item[3];
+    const stock_val = item["STOCK"];
     if (stock_val > 25) {
         stock.textContent = "In Stock";
     } else if (stock_val > 0) {
@@ -55,6 +55,7 @@ function getCatalogDisplay() {
                 data.forEach(item => {
                         const li = document.createElement("li");
                         li.className = "catalog_item";
+                        li.id = "item-"+item["ID_ITEM"];
                         
                         // Create & fill base item div contents
                         const div = createItemBaseContents(li, item);
@@ -81,17 +82,23 @@ function getCatalogDisplay() {
                         quant_select.appendChild(quant);
                         
                         // Add to cart option
-                        const remove = document.createElement("button");
-                        remove.id = "add_item";
-                        remove.textContent = "Add to cart";
+                        const add = document.createElement("button");
+                        add.id = "add_item";
+                        add.textContent = "Add to cart";
+                        add.setAttribute("id_item", item["ID_ITEM"]);
+                        add.onclick = function() {
+                            let id_item = this.getAttribute("id_item");
+                            let quant = document.querySelector("#item-"+id_item+" #item_quant").value;
+                            addItemToCart(id_item, quant);
+                        };
                         
-                        // Create & compose div to hold quantity selection and remove from cart option
+                        // Create & compose div to hold quantity selection and add to cart option
                         
                         const quant_option = document.createElement("div");
                         quant_option.id = "quant_option";
                         
                         quant_option.appendChild(quant_select);
-                        quant_option.appendChild(remove);
+                        quant_option.appendChild(add);
                         
                         // Compose the item card from its parts
                         div.appendChild(quant_option);
@@ -141,7 +148,7 @@ function getCartDisplay() {
                             option.text = i;
                             quant.add(option);
                         }
-                        quant.value = item[4];
+                        quant.value = item["QUANT"];
                         
                         quant_select.appendChild(quant_label);
                         quant_select.appendChild(quant);
@@ -150,6 +157,9 @@ function getCartDisplay() {
                         const remove = document.createElement("button");
                         remove.id = "remove_item";
                         remove.textContent = "Remove";
+                        remove.onclick = function() {
+                            remItemFromCart(item["ID_ITEM"]);
+                        };
                         
                         // Create & compose div to hold quantity selection and remove from cart option
                         
@@ -171,4 +181,18 @@ function getCartDisplay() {
             }
         )
     );
+}
+
+function addItemToCart(id_item, quant) {
+    fetch("AddItemToCartController.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `id_item=${encodeURIComponent(id_item)}&quant=${encodeURIComponent(quant)}`
+    });
+}
+
+function remItemFromCart(id_item) {
+    
 }

@@ -7,14 +7,14 @@ include "StoreDB.php";
 
 $store_db = new StoreDB();
 
-$uid = $_SESSION["user_id"];
+$id_user = $_SESSION["user_id"];
 
 // Sanitize for security
 $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
 // Get user profile data
 $store_db->connect();
-$userdata = $store_db->getUserByID($uid);
+$userdata = $store_db->getUserByID($id_user);
 $store_db->disconnect();
 
 // Verify old password
@@ -26,7 +26,7 @@ if (!(password_verify($password, $userdata["PASSWORD"]))) {
 
 // Delete account
 $store_db->connect();
-$store_db->delUserById($uid);
+$store_db->delUserById($id_user);
 $store_db->disconnect();
 
 include 'LogoutHandler.php';
