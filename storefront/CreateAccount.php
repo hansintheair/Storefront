@@ -29,7 +29,7 @@
     </body>
     
     <?php
-        unset($_SESSION["register_error"]);    
+        unset($_SESSION["register_error"]);
         unset($_SESSION["register_success"]);
     ?>
     
