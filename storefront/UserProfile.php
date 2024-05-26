@@ -51,13 +51,22 @@
                             <input name="old_password" type="password" placeholder="Old Password" required><br>
                             <input name="new_password" type="password" placeholder="New Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,20})" title="Password must be at between 8 and 20 characters long, contain at least one of each: uppercase letter, lowercase letter, number, and special character !@#$%^&*" required>
                             <button type="submit">Save Changes</button>
-                            <span class="error"><?php echo isset($_SESSION["password_update_error"]) ? $_SESSION["email_update_error"] : "";?></span>
+                            <span class="error"><?php echo isset($_SESSION["password_update_error"]) ? $_SESSION["password_update_error"] : "";?></span>
                             <span class="success"><?php echo isset($_SESSION["password_update_success"]) ? "Successfully registered" : "";?></span>
                         </form>
                     </div>
                 </li>
                 <li><p id="dangerzone"><b>Danger Zone</b></p></li>
-                <li><a>Delete account</a></li>
+                <li>
+                    <div>
+                        <span>Delete account</span>
+                        <form action="DeleteAccountHandler.php" method="post">
+                            <input name="password" type="password" placeholder="Verify Password" required>
+                            <button type="submit">Delete</button>
+                            <span class="error"><?php echo isset($_SESSION["delete_account_error"]) ? $_SESSION["delete_account_error"] : "";?></span>
+                        </form>
+                    </div>
+                </li>
             </ul>
             
             <script>
@@ -75,6 +84,7 @@
             unset($_SESSION["email_update_success"]);
             unset($_SESSION["password_update_error"]);
             unset($_SESSION["password_update_success"]);
+            unset($_SESSION["delete_account_error"]);
         ?>
     
     </body>

@@ -83,6 +83,12 @@ class StoreDB {
         return $this->db->query($query)->fetch_assoc();
     }
     
+    function delUserById($uid) {
+        $query = "DELETE FROM `".$this->db_name."`.`entity_users` WHERE `id_user` = '".$uid."'";
+        
+        $this->db->query($query);
+    }
+    
     function addUser($email, $password, $type) {
         $query = "INSERT INTO `".$this->db_name."`.`entity_users` (`email`, `password`, `type`) VALUES ('".$email."', '".$password."', '".$type."')";
         
