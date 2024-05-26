@@ -14,7 +14,21 @@
     padding: 0px;
     overflow: hidden;
 }
+
+#profile_options li {
+    margin-top: 10px;
+}
+
+#profile_options input {
+    margin-top: 5px
+}
+
+#profile_info p {
+    margin-top: 25px;
+}
+
 #dangerzone {
-    margin-bottom: 6px;
+    margin-top: 25px;
+    margin-bottom: 0px;
     color:red;
 }

@@ -1,6 +1,6 @@
 
 function getCatalogDisplay() {
-        document.innerHTML = fetch("DisplayCatalog.php")
+        fetch("DisplayCatalog.php")
         .then(response => response.json()
         .then(data => {
                 const ul = document.createElement("ul");

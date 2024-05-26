@@ -54,6 +54,6 @@ $store_db->disconnect();
 
 $_SESSION["register_success"] = true;
 unset($_SESSION["register_error"]);
-header("Location: CreateAccount.php");
+//header("Location: CreateAccount.php");
 
  
