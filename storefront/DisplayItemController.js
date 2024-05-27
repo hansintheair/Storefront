@@ -157,8 +157,11 @@ function getCartDisplay() {
                         const remove = document.createElement("button");
                         remove.id = "remove_item";
                         remove.textContent = "Remove";
+                        remove.setAttribute("id_cartitem", item["ID_CARTITEM"]);
                         remove.onclick = function() {
-                            remItemFromCart(item["ID_ITEM"]);
+                            let id_item = this.getAttribute("id_cartitem");
+                            remItemFromCart(id_item);
+                            location.reload();
                         };
                         
                         // Create & compose div to hold quantity selection and remove from cart option
@@ -193,6 +196,13 @@ function addItemToCart(id_item, quant) {
     });
 }
 
-function remItemFromCart(id_item) {
-    
+function remItemFromCart(id_cartitem) {
+    console.log(id_cartitem);
+    fetch("RemoveItemFromCartController.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: `id_cartitem=${encodeURIComponent(id_cartitem)}`
+    });
 }

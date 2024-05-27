@@ -94,12 +94,12 @@ class StoreDB {
     }
     
     function getCart($id_user) {
-        $query = "SELECT `entity_items`.`id_item` AS `ID_ITEM`, `entity_items`.`name` AS `NAME`, `entity_items`.`desc` AS `DESC`, `entity_catalogitems`.`price` AS `PRICE`, `entity_catalogitems`.`quant` AS `STOCK`, `entity_cartitems`.`quant` AS `QUANT` FROM `".$this->db_name."`.`xref_users_cartitems` AS `xref_users_cartitems`, `".$this->db_name."`.`entity_users` AS `entity_users`, `".$this->db_name."`.`entity_cartitems` AS `entity_cartitems`, `".$this->db_name."`.`entity_items` AS `entity_items`, `".$this->db_name."`.`entity_catalogitems` AS `entity_catalogitems` WHERE `entity_users`.`id_user` = '".$id_user."' AND `xref_users_cartitems`.`id_user` = `entity_users`.`id_user` AND `entity_cartitems`.`id_cartitem` = `xref_users_cartitems`.`id_cartitem` AND `entity_items`.`id_item` = `entity_cartitems`.`id_item` AND `entity_catalogitems`.`id_catalogitem` = `entity_items`.`id_catalogitem`";
+        $query = "SELECT `entity_cartitems`.`id_cartitem` AS `ID_CARTITEM`, `entity_items`.`id_item` AS `ID_ITEM`, `entity_items`.`name` AS `NAME`, `entity_items`.`desc` AS `DESC`, `entity_catalogitems`.`price` AS `PRICE`, `entity_catalogitems`.`quant` AS `STOCK`, `entity_cartitems`.`quant` AS `QUANT` FROM `".$this->db_name."`.`xref_users_cartitems` AS `xref_users_cartitems`, `".$this->db_name."`.`entity_users` AS `entity_users`, `".$this->db_name."`.`entity_cartitems` AS `entity_cartitems`, `".$this->db_name."`.`entity_items` AS `entity_items`, `".$this->db_name."`.`entity_catalogitems` AS `entity_catalogitems` WHERE `entity_users`.`id_user` = '".$id_user."' AND `xref_users_cartitems`.`id_user` = `entity_users`.`id_user` AND `entity_cartitems`.`id_cartitem` = `xref_users_cartitems`.`id_cartitem` AND `entity_items`.`id_item` = `entity_cartitems`.`id_item` AND `entity_catalogitems`.`id_catalogitem` = `entity_items`.`id_catalogitem`";
         return $this->db->query($query)->fetch_all(MYSQLI_ASSOC);
     }
     
     function getItemInCart($id_user, $id_item) {
-        $query = "SELECT `entity_items`.`id_item` AS `ID_ITEM`, `entity_items`.`name` AS `NAME`, `entity_items`.`desc` AS `DESC`, `entity_catalogitems`.`price` AS `PRICE`, `entity_catalogitems`.`quant` AS `STOCK`, `entity_cartitems`.`quant` AS `QUANT` FROM `".$this->db_name."`.`xref_users_cartitems` AS `xref_users_cartitems`, `".$this->db_name."`.`entity_users` AS `entity_users`, `".$this->db_name."`.`entity_cartitems` AS `entity_cartitems`, `".$this->db_name."`.`entity_items` AS `entity_items`, `".$this->db_name."`.`entity_catalogitems` AS `entity_catalogitems` WHERE `entity_users`.`id_user` = '".$id_user."' AND `entity_cartitems`.`id_item` = '".$id_item."' AND `xref_users_cartitems`.`id_user` = `entity_users`.`id_user` AND `entity_cartitems`.`id_cartitem` = `xref_users_cartitems`.`id_cartitem` AND `entity_items`.`id_item` = `entity_cartitems`.`id_item` AND `entity_catalogitems`.`id_catalogitem` = `entity_items`.`id_catalogitem`";
+        $query = "SELECT `entity_cartitems`.`id_cartitem` AS `ID_CARTITEM`, `entity_items`.`id_item` AS `ID_ITEM`, `entity_items`.`name` AS `NAME`, `entity_items`.`desc` AS `DESC`, `entity_catalogitems`.`price` AS `PRICE`, `entity_catalogitems`.`quant` AS `STOCK`, `entity_cartitems`.`quant` AS `QUANT` FROM `".$this->db_name."`.`xref_users_cartitems` AS `xref_users_cartitems`, `".$this->db_name."`.`entity_users` AS `entity_users`, `".$this->db_name."`.`entity_cartitems` AS `entity_cartitems`, `".$this->db_name."`.`entity_items` AS `entity_items`, `".$this->db_name."`.`entity_catalogitems` AS `entity_catalogitems` WHERE `entity_users`.`id_user` = '".$id_user."' AND `entity_cartitems`.`id_item` = '".$id_item."' AND `xref_users_cartitems`.`id_user` = `entity_users`.`id_user` AND `entity_cartitems`.`id_cartitem` = `xref_users_cartitems`.`id_cartitem` AND `entity_items`.`id_item` = `entity_cartitems`.`id_item` AND `entity_catalogitems`.`id_catalogitem` = `entity_items`.`id_catalogitem`";
         return $this->db->query($query)->fetch_all(MYSQLI_ASSOC);
     }
     
@@ -108,11 +108,25 @@ class StoreDB {
         return (bool)$this->db->query($query)->fetch_assoc();
     }
     
+    function delItemInCart($id_cartitem) {
+
+        error_log("IN delItemInCart");  //DEBUG
+        
+        // Delete cart item record in the entity_cartitems table
+        $query = "DELETE FROM `".$this->db_name."`.`entity_cartitems` WHERE `id_cartitem` = '".$id_cartitem."'";
+        error_log("QUERY1: ".$query);
+        $this->db->query($query);
+        
+        // Delete the cross reference record in the xref_users_cartitems table
+        $query = "DELETE FROM `".$this->db_name."`.`xref_users_cartitems` WHERE `id_cartitem` = '".$id_cartitem."'";
+        error_log("QUERY2: ".$query);
+        $this->db->query($query);
+    }
+    
     function addItemToCart($id_user, $id_item, $quant) {
         
-        // Check if item already exists
-        $cart_item = $this->getItemInCart($id_user, $id_item);
-        if (count($cart_item) > 0) {
+        // Check if item is already in the user's cart
+        if ($this->checkItemInCart($id_user, $id_item)) {
 //            error_log("THAT ITEM ALREADY EXISTS");  //DEBUG
             return;
         }

@@ -18,3 +18,5 @@ function addItemToCart($id_user, $id_item, $quant) {
     $store_db->addItemToCart($id_user, $id_item, $quant);
     $store_db->disconnect();
 }
+
+addItemToCart($id_user, $id_item, $quant);
