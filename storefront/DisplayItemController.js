@@ -64,6 +64,9 @@ function getCatalogDisplay() {
                         
                         const quant_select = document.createElement("div");
                         quant_select.id = "quant_select";
+                        if (item["IN_CART"] === "1") {
+                            quant_select.className = "disabled";
+                        }
                         
                         const quant_label = document.createElement("span");
                         quant_label.id = "quant_label";
@@ -71,6 +74,7 @@ function getCatalogDisplay() {
 
                         const quant = document.createElement("select");
                         quant.id = "item_quant";
+                        quant.disabled = (item["IN_CART"] === "1");
                         for (let i = 1; i <= 25; i++) {
                             const option = document.createElement("option");
                             option.value = i;
@@ -84,12 +88,14 @@ function getCatalogDisplay() {
                         // Add to cart option
                         const add = document.createElement("button");
                         add.id = "add_item";
-                        add.textContent = "Add to cart";
+                        add.textContent = (item["IN_CART"] === "1") ? "In cart" : "Add to cart";
+                        add.disabled = (item["IN_CART"] === "1");
                         add.setAttribute("id_item", item["ID_ITEM"]);
                         add.onclick = function() {
                             let id_item = this.getAttribute("id_item");
                             let quant = document.querySelector("#item-"+id_item+" #item_quant").value;
                             addItemToCart(id_item, quant);
+                            location.reload();
                         };
                         
                         // Create & compose div to hold quantity selection and add to cart option
