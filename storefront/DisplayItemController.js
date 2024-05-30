@@ -160,6 +160,13 @@ async function getCartDisplay(target) {
                             quant.add(option);
                         }
                         quant.value = item["QUANT"];
+                        quant.setAttribute("id_cartitem", item["ID_CARTITEM"]);
+                        quant.onchange = function() {
+                            let id_cartitem = this.getAttribute("id_cartitem");
+                            console.log(this.value);
+                            updateCartItemQuant(id_cartitem, this.value);
+                            location.reload();
+                        };
                         
                         quant_select.appendChild(quant_label);
                         quant_select.appendChild(quant);
@@ -170,8 +177,8 @@ async function getCartDisplay(target) {
                         remove.textContent = "Remove";
                         remove.setAttribute("id_cartitem", item["ID_CARTITEM"]);
                         remove.onclick = function() {
-                            let id_item = this.getAttribute("id_cartitem");
-                            remItemFromCart(id_item);
+                            let id_cartitem = this.getAttribute("id_cartitem");
+                            remItemFromCart(id_cartitem);
                             location.reload();
                         };
                         
@@ -197,25 +204,38 @@ async function getCartDisplay(target) {
     );
 }
 
+function updateCartItemQuant(id_cartitem, quant) {
+    fetch("UpdateQuantInCartController.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `id_cartitem=${encodeURIComponent(id_cartitem)}&quant=${encodeURIComponent(quant)}`
+        }
+    );
+}
+
 function addItemToCart(id_item, quant) {
     fetch("AddItemToCartController.php", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: `id_item=${encodeURIComponent(id_item)}&quant=${encodeURIComponent(quant)}`
-    });
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `id_item=${encodeURIComponent(id_item)}&quant=${encodeURIComponent(quant)}`
+        }
+    );
 }
 
 function remItemFromCart(id_cartitem) {
     console.log(id_cartitem);
     fetch("RemoveItemFromCartController.php", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: `id_cartitem=${encodeURIComponent(id_cartitem)}`
-    });
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `id_cartitem=${encodeURIComponent(id_cartitem)}`
+        }
+    );
 }
 
 async function getOrderTotal() {

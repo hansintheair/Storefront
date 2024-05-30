@@ -39,8 +39,8 @@
     <script>
         async function main() {
             await getCartDisplay(document.querySelector(".items_list"));
-            document.getElementById("order-total").textContent = await getOrderTotal();
-            console.log("end");
+            let total = await getOrderTotal();
+            document.getElementById("order-total").textContent = total.toFixed(2);
         }
         main();
         

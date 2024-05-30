@@ -238,7 +238,7 @@ class StoreDB {
     
     function delItemInCart($id_cartitem) {
 
-        error_log("IN delItemInCart");  //DEBUG
+//        error_log("IN delItemInCart");  //DEBUG
         
         // Delete cart item record in the entity_cartitems table
         $query = "
@@ -284,6 +284,17 @@ class StoreDB {
             `".$this->db_name."`.`xref_users_cartitems` (`id_user`, `id_cartitem`)
         VALUES
             ('".$id_user."', '".$id_cartitem."')";
+        $this->db->query($query);
+    }
+    
+    function setCartItemQuant($id_cartitem, $quant) {
+        $query = "
+        UPDATE 
+                `".$this->db_name."`.`entity_cartitems` 
+        SET 
+            `quant` = '".$quant."'
+        WHERE
+            `id_cartitem` = '".$id_cartitem."'";
         $this->db->query($query);
     }
 
