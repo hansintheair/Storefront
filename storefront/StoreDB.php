@@ -255,7 +255,7 @@ class StoreDB {
             `".$this->db_name."`.`xref_users_cartitems`
         WHERE
             `id_cartitem` = '".$id_cartitem."'";
-        error_log("QUERY2: ".$query);
+//        error_log("QUERY2: ".$query);
         $this->db->query($query);
     }
     
@@ -290,12 +290,53 @@ class StoreDB {
     function setCartItemQuant($id_cartitem, $quant) {
         $query = "
         UPDATE 
-                `".$this->db_name."`.`entity_cartitems` 
+            `".$this->db_name."`.`entity_cartitems` 
         SET 
             `quant` = '".$quant."'
         WHERE
             `id_cartitem` = '".$id_cartitem."'";
         $this->db->query($query);
     }
+    
+    function getOrders($id_user) {
+        $query = "
+        SELECT 
+            `entity_users`.`id_user` AS `User ID`,
+            `entity_orders`.`oder_date` AS `ORDER_DATE`
+        FROM
+            `".$this->db_name."`.`xref_users_orders` AS `xref_users_orders`,
+            `".$this->db_name."`.`entity_users` AS `entity_users`,
+            `".$this->db_name."`.`entity_orders` AS `entity_orders`
+        WHERE
+            `entity_users`.`id_user` = '".$id_user."'
+            AND `xref_users_orders`.`id_user` = `entity_users`.`id_user`
+            AND `entity_orders`.`id_order` = `xref_users_orders`.`id_order`
+            }";
+        return $this->db->query($query)->fetch_all(MYSQLI_ASSOC);
+}
 
+    function getOrderItems($id_user) {
+        $query = "
+        SELECT 
+            `xref_orders_orderitems`.`id_orderitem` AS `ID_ORDERITEM`,
+            `entity_orderitems`.`id_item` AS `ID_ITEM`,
+            `entity_items`.`name` AS `NAME`,
+            `entity_items`.`desc` AS `DESC`,
+            `entity_orderitems`.`price_per_unit` AS `PRICE`,
+            `entity_orderitems`.`quant` AS `QUANT`
+        FROM
+            `".$this->db_name."`.`xref_users_orders` AS `xref_users_orders`,
+            `".$this->db_name."`.`entity_users` AS `entity_users`,
+            `".$this->db_name."`.`xref_orders_orderitems` AS `xref_orders_orderitems`,
+            `".$this->db_name."`.`entity_orderitems` AS `entity_orderitems`,
+            `".$this->db_name."`.`entity_items` AS `entity_items`
+        WHERE
+            `entity_users`.`id_user` = '".$id_user."'
+                AND `xref_users_orders`.`id_user` = `entity_users`.`id_user`
+                AND `xref_orders_orderitems`.`id_order` = `xref_users_orders`.`id_order`
+                AND `entity_orderitems`.`id_orderitem` = `xref_orders_orderitems`.`id_orderitem`
+                AND `entity_items`.`id_item` = `entity_orderitems`.`id_item`";
+        return $this->db->query($query)->fetch_all(MYSQLI_ASSOC);
+    }
+    
 }
