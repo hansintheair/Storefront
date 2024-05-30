@@ -17,11 +17,11 @@
         
         <?php include 'UserNavbarComponent.php';?>
         
-        <div class="items_pane">
+        <div class="items-pane">
             <div class="sidebar"></div>
             <div class="items_list">
                 <script>
-                    getCatalogDisplay(document.querySelector(".items_list"));
+                    setCatalogDisplay(document.querySelector(".items_list"));
                 </script>
             </div>
         </div>

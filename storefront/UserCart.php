@@ -17,19 +17,20 @@
         
         <?php include 'UserNavbarComponent.php';?>
         
-        <div class="items_pane">
+        <div class="items-pane">
             <div class="sidebar">
-                <h3>Cart Summary</h3>
+                <h3 id="cart-summary">Cart Summary</h3>
+                <div class="order-summary"></div>
                 <div>
                     <form action="" method="post">
-                        <p><span>Order total</span><br><span>$</span><span id="order-total"></span></p>
+                        <p><span><b>Order total</b></span><br><span>$</span><span id="order-total"></span></p>
                         <button type="submit">Place order</button>
                     </form>
                     
                 </div>
             </div>
-            <div class="items_list">
-            </div>
+            
+            <div class="items_list"></div>
         </div>
         
         
@@ -38,7 +39,8 @@
     
     <script>
         async function main() {
-            await getCartDisplay(document.querySelector(".items_list"));
+            await setCartDisplay(document.querySelector(".items_list"));
+            await getOrderSummary(document.querySelector(".order-summary"));
             let total = await getOrderTotal();
             document.getElementById("order-total").textContent = total.toFixed(2);
         }

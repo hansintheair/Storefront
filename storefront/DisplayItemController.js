@@ -50,7 +50,7 @@ function createItemBaseContents(li, item) {
     return div;
 }
 
-function getCatalogDisplay(target) {
+function setCatalogDisplay(target) {
         fetch("DisplayCatalogController.php")
         .then(response => response.json()
         .then(data => {
@@ -126,7 +126,7 @@ function getCatalogDisplay(target) {
     );
 }
 
-async function getCartDisplay(target) {
+async function setCartDisplay(target) {
         await fetch("DisplayCartController.php")
         .then(response => response.json()
         .then(data => {
@@ -236,6 +236,78 @@ function remItemFromCart(id_cartitem) {
             body: `id_cartitem=${encodeURIComponent(id_cartitem)}`
         }
     );
+}
+
+async function getOrderSummary(target) {
+    const items = document.querySelectorAll(".cart_list li");
+    
+    const ul = document.createElement("ul");
+    ul.className = "order-summary-list";
+    
+    items.forEach(item => {
+        
+            let quantvar = item.querySelector("#item_quant").value;
+            let pricevar = item.querySelector("#item_price").value;
+            let subtovar = (quantvar * pricevar).toFixed(2);
+            
+            // Create list item to hold item card
+            const li = document.createElement("li");
+            li.className = "order-summary-item";
+            
+//            // Define reusable currency element
+//            const currency = document.createElement("span");
+//            currency.textContent = "$";
+                
+            // Create base item div
+            const div = document.createElement("div");
+            
+            // Item name and price
+            
+            const name_price_container = document.createElement("p");
+            name_price_container.className = "order-name-price-container";
+            
+            const name = document.createElement("span");
+            name.className = "order-item-name";
+            name.textContent = item.querySelector("#item_name").textContent;
+            
+            const price = document.createElement("span");
+            price.className = "order-item-price";
+            price.textContent = "($" + pricevar + " each)";
+            
+            name_price_container.appendChild(name);
+            name_price_container.appendChild(price);
+            
+            // Item price x quantity 
+            
+            const price_quant_container = document.createElement("p");
+            
+            const quant = document.createElement("span");
+            quant.className = "order-item-quant";
+            quant.textContent = " x " + quantvar;
+            
+            price_quant_container.appendChild(quant);
+            
+            // Item subtotal
+            
+            const subtotal_container = document.createElement("p");
+            
+            const subtotal = document.createElement("div");
+            subtotal.id = "order-item-subtotal";
+            subtotal.textContent = "$" + subtovar;
+            
+            subtotal_container.appendChild(subtotal);
+            
+            // Compose the item info from its parts
+            div.append(name_price_container);
+            div.append(price_quant_container);
+            div.append(subtotal_container);
+            
+            // Compose the list of items
+            li.appendChild(div);
+            ul.appendChild(li);
+        }
+    );
+    target.appendChild(ul);
 }
 
 async function getOrderTotal() {
