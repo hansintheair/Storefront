@@ -35,8 +35,6 @@
             <div class="items_list"></div>
         </div>
         
-        
-        
     </body>
     
     <script>
@@ -47,9 +45,6 @@
             document.getElementById("order-total").textContent = total.toFixed(2);
         }
         main();
-        
-        
-        
     </script>
     
 </html>
