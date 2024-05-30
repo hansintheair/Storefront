@@ -21,7 +21,7 @@
             <div class="sidebar"></div>
             <div class="items_list">
                 <script>
-                    getCatalogDisplay();
+                    getCatalogDisplay(document.querySelector(".items_list"));
                 </script>
             </div>
         </div>

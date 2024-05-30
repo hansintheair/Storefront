@@ -19,9 +19,13 @@ function createItemBaseContents(li, item) {
     const price_stock = document.createElement("p");
     price_stock.id = "price_stock";
 
-    const price = document.createElement("span");
+    const currency = document.createElement("span");
+    currency.textContent = "$";
+    
+    const price = document.createElement("input");
     price.id = "item_price";
-    price.textContent = "$" + item["PRICE"];
+    price.readOnly = true;
+    price.value = item["PRICE"];
 
     const stock = document.createElement("span");
     stock.id = "item_stock";
@@ -34,6 +38,7 @@ function createItemBaseContents(li, item) {
         stock.textContent = "Out of Stock";
     }
 
+    price_stock.appendChild(currency);
     price_stock.appendChild(price);
     price_stock.appendChild(stock);
     
@@ -45,7 +50,7 @@ function createItemBaseContents(li, item) {
     return div;
 }
 
-function getCatalogDisplay() {
+function getCatalogDisplay(target) {
         fetch("DisplayCatalogController.php")
         .then(response => response.json()
         .then(data => {
@@ -115,14 +120,14 @@ function getCatalogDisplay() {
                         ul.appendChild(li);
                     }
                 );
-                document.querySelector(".items_list").appendChild(ul);
+                target.appendChild(ul);
             }
         )
     );
 }
 
-function getCartDisplay() {
-        fetch("DisplayCartController.php")
+async function getCartDisplay(target) {
+        await fetch("DisplayCartController.php")
         .then(response => response.json()
         .then(data => {
                 const ul = document.createElement("ul");
@@ -186,7 +191,7 @@ function getCartDisplay() {
                         ul.appendChild(li);
                     }
                 );
-                document.querySelector(".items_list").appendChild(ul);
+                target.appendChild(ul);
             }
         )
     );
@@ -211,4 +216,17 @@ function remItemFromCart(id_cartitem) {
         },
         body: `id_cartitem=${encodeURIComponent(id_cartitem)}`
     });
+}
+
+async function getOrderTotal() {
+    const items = document.querySelectorAll(".cart_list li");
+    let total = 0.0;
+    
+    items.forEach(item => {
+            const quant = item.querySelector("#item_quant").value;
+            const price = item.querySelector("#item_price").value;
+            total += (quant * price);
+        }
+    );
+    return total;
 }

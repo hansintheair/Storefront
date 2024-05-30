@@ -47,6 +47,16 @@ body {
     right: 10px;
 }
 
+#item_price {
+  border: none;
+  display: inline;
+  font-family: inherit;
+  font-size: inherit;
+  background-color: inherit;
+  padding: 0;
+  width: min-content;
+}
+
 .disabled {
     color: grey;
 }

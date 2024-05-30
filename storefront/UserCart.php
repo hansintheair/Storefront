@@ -18,14 +18,34 @@
         <?php include 'UserNavbarComponent.php';?>
         
         <div class="items_pane">
-            <div class="sidebar"></div>
+            <div class="sidebar">
+                <h3>Cart Summary</h3>
+                <div>
+                    <form action="" method="post">
+                        <p><span>Order total</span><br><span>$</span><span id="order-total"></span></p>
+                        <button type="submit">Place order</button>
+                    </form>
+                    
+                </div>
+            </div>
             <div class="items_list">
-                <script>
-                    getCartDisplay();
-                </script>
             </div>
         </div>
         
+        
+        
     </body>
+    
+    <script>
+        async function main() {
+            await getCartDisplay(document.querySelector(".items_list"));
+            document.getElementById("order-total").textContent = await getOrderTotal();
+            console.log("end");
+        }
+        main();
+        
+        
+        
+    </script>
     
 </html>
