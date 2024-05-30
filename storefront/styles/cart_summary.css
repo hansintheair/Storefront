@@ -1,0 +1,38 @@
+
+#cart-summary {
+    margin-top: 0;
+}
+
+.order-summary-list {
+    margin: 0;
+    padding: 0;
+}
+
+.order-summary-list li {
+    list-style-type: none;
+}
+
+.order-summary-item {
+    margin-bottom: 10px;
+}
+
+.order-name-price-container {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+}
+
+.order-summary-item{
+    display: block;
+}
+
+.order-summary-item p {
+    margin: 0px;
+}
+
+.order-item-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
