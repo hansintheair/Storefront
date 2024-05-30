@@ -10,6 +10,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="styles/navbar.css">
         <link rel="stylesheet" href="styles/catalog.css">
+        <link rel="stylesheet" href="styles/cart_summary.css">
+        <link rel="stylesheet" href="styles/sidebar.css">
         <script type="text/javascript" src="DisplayItemController.js"></script>
     </head>
     
