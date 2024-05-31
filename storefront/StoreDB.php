@@ -163,7 +163,7 @@ class StoreDB {
         return $this->db->query($query)->fetch_all(MYSQLI_ASSOC);
     }
     
-    function setCatalogItem($id_item, $desc, $price, $quant) {
+    function setCatalogItem($id_item, $name, $desc, $price, $quant) {
         $query = "
         UPDATE 
             `".$this->db_name."`.`entity_catalogitems` 
@@ -178,7 +178,30 @@ class StoreDB {
         UPDATE 
             `".$this->db_name."`.`entity_items` 
         SET 
+            `desc` = '".$name."',
             `desc` = '".$desc."'
+        WHERE
+            `id_item` = '".$id_item."'";
+        $this->db->query($query);
+    }
+    
+    function setCatalogItemQuant($id_item, $quant) {
+        $query = "
+        UPDATE 
+            `".$this->db_name."`.`entity_catalogitems` 
+        SET 
+            `quant` = '".$quant."'
+        WHERE
+            `id_catalogitem` = '".$id_item."'";
+        $this->db->query($query);
+    }
+    
+    function setItemCatalogReference($id_item) {
+        $query = "
+        UPDATE 
+            `".$this->db_name."`.`entity_items` 
+        SET 
+            `id_catalogitem` = '".$id_item."'
         WHERE
             `id_item` = '".$id_item."'";
         $this->db->query($query);
@@ -204,6 +227,37 @@ class StoreDB {
         WHERE
             `id_item` = '".$id_item."'";
 //        error_log("QUERY2: ".$query);  //DEBUG
+        $this->db->query($query);
+    }
+    
+    function addItemToCatalog($name, $desc, $price, $quant) {
+        
+        // Check if item by that name is already in the catalog
+//        if ($this->checkItemInCatalog($name)) {
+////            error_log("THAT ITEM ALREADY EXISTS");  //DEBUG
+//            return;
+//        }
+        
+        // Insert a new item record into the entity_items table
+        $query = "
+        INSERT INTO
+            `".$this->db_name."`.`entity_items` (`name`, `desc`)
+        VALUES
+            ('".$name."', '".$desc."')";
+        $this->db->query($query);
+        
+        // Get id of inserted item
+        $id_item = $this->db->insert_id;
+        
+        // Set id_catalogitem (to same as id_item)
+        $this->setItemCatalogReference($id_item);
+        
+        // Insert a new catalogitem record into the entity_catalogitems table
+        $query = "
+        INSERT INTO
+            `".$this->db_name."`.`entity_catalogitems` (`id_catalogitem`, `price`, `quant`)
+        VALUES
+            ('".$id_item."', '".$price."', '".$quant."')";
         $this->db->query($query);
     }
     
@@ -339,17 +393,6 @@ class StoreDB {
             `quant` = '".$quant."'
         WHERE
             `id_cartitem` = '".$id_cartitem."'";
-        $this->db->query($query);
-    }
-    
-    function setCatalogItemQuant($id_item, $quant) {
-        $query = "
-        UPDATE 
-            `".$this->db_name."`.`entity_catalogitems` 
-        SET 
-            `quant` = '".$quant."'
-        WHERE
-            `id_catalogitem` = '".$id_item."'";
         $this->db->query($query);
     }
     

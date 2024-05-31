@@ -81,7 +81,7 @@ function setCatalogDisplay(target) {
                         // Form for deleting item
                         
                         const form_delete = document.createElement("form");
-                        form_delete.action = "DeleteCatalogItem.php";
+                        form_delete.action = "DeleteItemFromCatalogController.php";
                         form_delete.method = "POST";
                         
                         const id_item_del = document.createElement("input");
