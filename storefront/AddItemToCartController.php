@@ -11,7 +11,7 @@ $id_item = filter_input(INPUT_POST, 'id_item', FILTER_SANITIZE_STRING);
 $quant = filter_input(INPUT_POST, 'quant', FILTER_SANITIZE_STRING);
 
 function addItemToCart($id_user, $id_item, $quant) {
-//    error_log("IN addItemToCart");
+//    error_log("IN addItemToCart");  //DEBUG
     echo "IN addItemToCart";
     $store_db = new StoreDB();
 

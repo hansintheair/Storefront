@@ -10,7 +10,7 @@ $id_user = $_SESSION["user_id"];
 $id_cartitem = filter_input(INPUT_POST, 'id_cartitem', FILTER_SANITIZE_STRING);
 
 function removeItemFromCart($id_cartitem) {
-//    error_log("IN addItemToCart");
+//    error_log("IN addItemToCart");  //DEBUG
     $store_db = new StoreDB();
 
     $store_db->connect();

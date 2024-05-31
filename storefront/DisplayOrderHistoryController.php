@@ -7,7 +7,7 @@ include "StoreDB.php";
 
 $id_user = $_SESSION["user_id"];
 
-//error_log("IN DisplayOrderHistoryController.php");
+//error_log("IN DisplayOrderHistoryController.php");  //DEBUG
 
 function getOrderHistoryJSON($id_user) {
     $store_db = new StoreDB();

@@ -163,6 +163,50 @@ class StoreDB {
         return $this->db->query($query)->fetch_all(MYSQLI_ASSOC);
     }
     
+    function setCatalogItem($id_item, $desc, $price, $quant) {
+        $query = "
+        UPDATE 
+            `".$this->db_name."`.`entity_catalogitems` 
+        SET 
+            `price` = '".$price."',
+            `quant` = '".$quant."'
+        WHERE
+            `id_catalogitem` = '".$id_item."'";
+        $this->db->query($query);
+        
+        $query = "
+        UPDATE 
+            `".$this->db_name."`.`entity_items` 
+        SET 
+            `desc` = '".$desc."'
+        WHERE
+            `id_item` = '".$id_item."'";
+        $this->db->query($query);
+    }
+    
+    function delItemInCatalog($id_item) {
+
+//        error_log("IN delItemInCart");  //DEBUG
+        
+        // Delete cart item record in the entity_cartitems table
+        $query = "
+        DELETE FROM 
+            `".$this->db_name."`.`entity_catalogitems`
+        WHERE 
+            `id_catalogitem` = '".$id_item."'";
+//        error_log("QUERY1: ".$query);  //DEBUG
+        $this->db->query($query);
+        
+        // Delete the cross reference record in the xref_users_cartitems table
+        $query = "
+        DELETE FROM
+            `".$this->db_name."`.`entity_items`
+        WHERE
+            `id_item` = '".$id_item."'";
+//        error_log("QUERY2: ".$query);  //DEBUG
+        $this->db->query($query);
+    }
+    
     function getCart($id_user) {
         $query = "
         SELECT 
@@ -246,7 +290,7 @@ class StoreDB {
             `".$this->db_name."`.`entity_cartitems`
         WHERE 
             `id_cartitem` = '".$id_cartitem."'";
-//        error_log("QUERY1: ".$query);
+//        error_log("QUERY1: ".$query);  //DEBUG
         $this->db->query($query);
         
         // Delete the cross reference record in the xref_users_cartitems table
@@ -255,7 +299,7 @@ class StoreDB {
             `".$this->db_name."`.`xref_users_cartitems`
         WHERE
             `id_cartitem` = '".$id_cartitem."'";
-//        error_log("QUERY2: ".$query);
+//        error_log("QUERY2: ".$query);  //DEBUG
         $this->db->query($query);
     }
     
@@ -395,7 +439,7 @@ class StoreDB {
     }
     
     function placeOrder($id_user) {
-        error_log("IN StoreDB.placeOrder");
+//        error_log("IN StoreDB.placeOrder");  //DEBUG
 
         $cart_items = $this->getCart($id_user);
 

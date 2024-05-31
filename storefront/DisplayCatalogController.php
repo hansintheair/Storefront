@@ -14,7 +14,7 @@ function getCatalogJSON($id_user) {
     $catalog_data = $store_db->getCatalog($id_user);
     $store_db->disconnect();
     
-    error_log(json_encode($catalog_data));  //DEBUG
+    // error_log(json_encode($catalog_data));  //DEBUG
     return json_encode($catalog_data);
 }
 

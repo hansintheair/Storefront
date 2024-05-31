@@ -7,13 +7,13 @@ include "StoreDB.php";
 
 $id_user = $_SESSION["user_id"];
 
-error_log("IN DisplayOrderHistoryItemsController.php");
+// error_log("IN DisplayOrderHistoryItemsController.php");  //DEBUG
 
 // Sanitize for security
 $id_order = filter_input(INPUT_POST, 'id_order', FILTER_SANITIZE_STRING);
 
-error_log("ID_ORDER: ".$id_order);  //DEBUG
-error_log("ID_ORDER: ".$id_user);  //DEBUG
+// error_log("ID_ORDER: ".$id_order);  //DEBUG
+// error_log("ID_ORDER: ".$id_user);  //DEBUG
 
 function getOrderHistoryItemsJSON($id_user, $id_order) {
     $store_db = new StoreDB();
