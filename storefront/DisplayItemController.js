@@ -1,5 +1,5 @@
 
-function createItemBaseContents(li, item, show_stock=true) {
+function createItemBaseContents(item, show_stock=true) {
     // Create div to hold item card parts
                         
     const div = document.createElement("div");
@@ -66,7 +66,7 @@ function setCatalogDisplay(target) {
                         li.id = "item-"+item["ID_ITEM"];
                         
                         // Create & fill base item div contents
-                        const div = createItemBaseContents(li, item);
+                        const div = createItemBaseContents(item);
                         
                         // Quantity selection
                         
@@ -143,7 +143,7 @@ async function setCartDisplay(target) {
                         li.className = "catalog_item";
                         
                         // Create & fill base item div contents
-                        const div = createItemBaseContents(li, item);
+                        const div = createItemBaseContents(item);
                         
                         // Quantity selection
                         
@@ -421,7 +421,7 @@ async function setOrderHistoryItemsDisplay(target, id_order) {
                     li.className = "catalog_item";
 
                     // Create & fill base item div contents
-                    const div = createItemBaseContents(li, item, false);
+                    const div = createItemBaseContents(item, false);
                     
                     // Quantity selection
                         
