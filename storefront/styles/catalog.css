@@ -10,7 +10,7 @@ body {
     list-style-type: none;
 }
 
-.catalog_list, .cart_list{
+.catalog_list, .cart_list, .order-history-items-list{
     display: grid;
     grid-template-columns: repeat(4, auto);
     gap: 20px;

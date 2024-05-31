@@ -10,6 +10,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="styles/navbar.css">
         <link rel="stylesheet" href="styles/catalog.css">
+        <link rel="stylesheet" href="styles/sidebar.css">
+        <link rel="stylesheet" href="styles/orders_history.css">
         <script type="text/javascript" src="DisplayItemController.js"></script>
     </head>
     
@@ -17,14 +19,24 @@
         
         <?php include 'UserNavbarComponent.php';?>
         
-        <div class="items_pane">
-            <div class="sidebar"></div>
+        <div class="items-pane">
+            <div class="sidebar">
+                <h3 id="orders-title">Orders</h3>
+                <div class="orders-history"></div>
+            </div>
             <div class="items_list">
-                <script>
-                    
-                </script>
             </div>
         </div>
+        
+        <script>
+            async function main() {
+                await setOrdersDisplay(
+                    document.querySelector(".orders-history"),
+                    document.querySelector(".items_list"),
+                );
+            }
+            main();
+        </script>
         
     </body>
     

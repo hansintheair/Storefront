@@ -24,7 +24,7 @@
                 <h3 id="cart-summary">Cart Summary</h3>
                 <div class="order-summary"></div>
                 <div>
-                    <form action="" method="post">
+                    <form action="PlaceOrderController.php" method="post">
                         <p><span><b>Order total</b></span><br><span>$</span><span id="order-total"></span></p>
                         <button type="submit">Place order</button>
                     </form>
@@ -40,7 +40,10 @@
     <script>
         async function main() {
             await setCartDisplay(document.querySelector(".items_list"));
-            await getOrderSummary(document.querySelector(".order-summary"));
+            await setOrderSummaryDisplay(
+                document.querySelector(".order-summary"),
+                document.querySelectorAll(".cart_list li")
+            );
             let total = await getOrderTotal();
             document.getElementById("order-total").textContent = total.toFixed(2);
         }

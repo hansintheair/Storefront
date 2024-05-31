@@ -298,10 +298,21 @@ class StoreDB {
         $this->db->query($query);
     }
     
+    function setCatalogItemQuant($id_item, $quant) {
+        $query = "
+        UPDATE 
+            `".$this->db_name."`.`entity_catalogitems` 
+        SET 
+            `quant` = '".$quant."'
+        WHERE
+            `id_catalogitem` = '".$id_item."'";
+        $this->db->query($query);
+    }
+    
     function getOrders($id_user) {
         $query = "
         SELECT 
-            `entity_users`.`id_user` AS `User ID`,
+            `entity_orders`.`id_order` AS `ID_ORDER`,
             `entity_orders`.`oder_date` AS `ORDER_DATE`
         FROM
             `".$this->db_name."`.`xref_users_orders` AS `xref_users_orders`,
@@ -310,12 +321,11 @@ class StoreDB {
         WHERE
             `entity_users`.`id_user` = '".$id_user."'
             AND `xref_users_orders`.`id_user` = `entity_users`.`id_user`
-            AND `entity_orders`.`id_order` = `xref_users_orders`.`id_order`
-            }";
+            AND `entity_orders`.`id_order` = `xref_users_orders`.`id_order`";
         return $this->db->query($query)->fetch_all(MYSQLI_ASSOC);
 }
 
-    function getOrderItems($id_user) {
+    function getOrderItems($id_user, $id_order) {
         $query = "
         SELECT 
             `xref_orders_orderitems`.`id_orderitem` AS `ID_ORDERITEM`,
@@ -332,11 +342,32 @@ class StoreDB {
             `".$this->db_name."`.`entity_items` AS `entity_items`
         WHERE
             `entity_users`.`id_user` = '".$id_user."'
+                AND `xref_orders_orderitems`.`id_order` =  '".$id_order."'
                 AND `xref_users_orders`.`id_user` = `entity_users`.`id_user`
                 AND `xref_orders_orderitems`.`id_order` = `xref_users_orders`.`id_order`
                 AND `entity_orderitems`.`id_orderitem` = `xref_orders_orderitems`.`id_orderitem`
                 AND `entity_items`.`id_item` = `entity_orderitems`.`id_item`";
         return $this->db->query($query)->fetch_all(MYSQLI_ASSOC);
+    }
+    
+    function placeOrder($id_user) {
+        error_log("IN StoreDB.placeOrder");
+
+        $cart_items = $this->getCart($id_user);
+        
+        $i = 0;  //DEBUG
+        echo "<br>";  //DEBUG
+        foreach($cart_items as $item) {
+            echo "[".$i."]<br>";  //DEBUG
+            $id_item = $item["ID_ITEM"];
+            echo "id_item: ".$id_item."<br>";  //DEBUG
+            $id_cartitem = $item["ID_CARTITEM"];
+            echo "id_cartitem: ".$id_cartitem."<br>";  //DEBUG
+            $quant_cartitem = $item["QUANT"];
+            echo "quant_cartitem: ".$quant_cartitem."<br>";  //DEBUG
+            $i++;  //DEBUG
+        }
+        
     }
     
 }

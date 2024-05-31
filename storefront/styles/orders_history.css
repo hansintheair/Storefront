@@ -1,0 +1,28 @@
+.orders-history-list {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.order-history-item {
+    padding: 5px;
+}
+
+.order-history-item:hover {
+    background-color: #111;
+    padding: 5px;
+    color: white;
+}
+
+.divider {
+    border-bottom: 1px solid black;
+    margin: 5px
+}
+
+#item_quant {
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    outline: none;
+
+}

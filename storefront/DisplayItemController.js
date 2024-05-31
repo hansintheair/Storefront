@@ -1,5 +1,5 @@
 
-function createItemBaseContents(li, item) {
+function createItemBaseContents(li, item, show_stock=true) {
     // Create div to hold item card parts
                         
     const div = document.createElement("div");
@@ -26,21 +26,24 @@ function createItemBaseContents(li, item) {
     price.id = "item_price";
     price.readOnly = true;
     price.value = item["PRICE"];
-
-    const stock = document.createElement("span");
-    stock.id = "item_stock";
-    const stock_val = item["STOCK"];
-    if (stock_val > 25) {
-        stock.textContent = "In Stock";
-    } else if (stock_val > 0) {
-        stock.textContent = "Only " + stock_val + " left!";
-    } else {
-        stock.textContent = "Out of Stock";
-    }
-
+    
     price_stock.appendChild(currency);
     price_stock.appendChild(price);
-    price_stock.appendChild(stock);
+    
+    if (show_stock) {
+        const stock = document.createElement("span");
+        stock.id = "item_stock";
+        const stock_val = item["STOCK"];
+        if (stock_val > 25) {
+            stock.textContent = "In Stock";
+        } else if (stock_val > 0) {
+            stock.textContent = "Only " + stock_val + " left!";
+        } else {
+            stock.textContent = "Out of Stock";
+        }
+        
+        price_stock.appendChild(stock);
+    }
     
     // Compose div from parts & return it
     div.appendChild(name);
@@ -52,8 +55,8 @@ function createItemBaseContents(li, item) {
 
 function setCatalogDisplay(target) {
         fetch("DisplayCatalogController.php")
-        .then(response => response.json()
-        .then(data => {
+            .then(response => response.json()
+            .then(data => {
                 const ul = document.createElement("ul");
                 ul.className = "catalog_list";
 
@@ -238,13 +241,18 @@ function remItemFromCart(id_cartitem) {
     );
 }
 
-async function getOrderSummary(target) {
-    const items = document.querySelectorAll(".cart_list li");
+async function setOrderSummaryDisplay(target, items) {
     
     const ul = document.createElement("ul");
     ul.className = "order-summary-list";
     
+    console.log("IN setOrderHistoryItemsDisplay");  //DEBUG
+    console.log("ITEMS = " + items);  //DEBUG
+    console.log("TARGET = " + target);  //DEBUG
+    
     items.forEach(item => {
+        
+            console.log(item);
         
             let quantvar = item.querySelector("#item_quant").value;
             let pricevar = item.querySelector("#item_price").value;
@@ -253,11 +261,7 @@ async function getOrderSummary(target) {
             // Create list item to hold item card
             const li = document.createElement("li");
             li.className = "order-summary-item";
-            
-//            // Define reusable currency element
-//            const currency = document.createElement("span");
-//            currency.textContent = "$";
-                
+                           
             // Create base item div
             const div = document.createElement("div");
             
@@ -304,7 +308,7 @@ async function getOrderSummary(target) {
             
             // Compose the list of items
             li.appendChild(div);
-            ul.appendChild(li);
+            ul.appendChild(li);            
         }
     );
     target.appendChild(ul);
@@ -321,4 +325,148 @@ async function getOrderTotal() {
         }
     );
     return total;
+}
+
+async function setOrdersDisplay(target, items_list_target) {
+        
+    fetch("DisplayOrderHistoryController.php")
+        .then(response => response.json()
+        .then(data => {
+            const ul = document.createElement("ul");
+            ul.className = "orders-history-list";
+            
+            i = 0;
+            data.forEach(item => {
+                
+                    // Create div for order summary
+                    const order_summary = document.createElement("div");
+                    order_summary.className = "order-summary";
+
+                    // Create list item to hold item card
+                    const li = document.createElement("li");
+                    li.className = "order-history-item";
+                    li.setAttribute("id_order", item["ID_ORDER"]);
+                    li.setAttribute("displayed", false);
+                    li.onclick = async function() {
+                        let id_order = this.getAttribute("id_order");
+                        let displayed = this.getAttribute("displayed") === "true";
+                        console.log("CLICKED ORDER " + id_order);  //DEBUG
+//                        console.log("DISPLAYED: " + displayed);  //DEBUG
+//                        console.log("ORDER SUMMARY: " + order_summary);  //DEBUG
+                        if (!displayed) {
+                            await displayOrder(items_list_target, order_summary, id_order);
+                        } 
+                        else {
+                            items_list_target.innerHTML = null;
+                        }
+                        this.setAttribute("displayed", !displayed);
+                    };
+
+                    // Create base item div
+                    const div = document.createElement("div");
+                    div.className = "order-number-date";
+
+                    const order_date = document.createElement("span");
+                    order_date.className = "order-date";
+                    let date = item["ORDER_DATE"];
+                    order_date.textContent = date;
+                    
+                    // Compose the item info from its parts
+                    div.appendChild(order_date);
+
+                    // Compose the list of items
+                    li.appendChild(div);
+                    ul.appendChild(li);
+                    ul.appendChild(order_summary);
+                    if (i > 0 && i < data.length) {
+                        const divider = document.createElement("li");
+                        divider.className = "divider";
+                        ul.appendChild(divider);
+                    }
+                }
+            );
+            target.appendChild(ul);
+            }
+        )
+    );
+}
+
+async function setOrderHistoryItemsDisplay(target, id_order) {
+    
+//    console.log("IN setOrderHistoryItemsDisplay");  //DEBUG
+//    console.log("id_order = " + id_order);  //DEBUG
+//    console.log(target);  //DEBUG
+    
+    fetch(
+        "DisplayOrderHistoryItemsController.php",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `id_order=${encodeURIComponent(id_order)}`
+        }
+    )
+        .then(response => response.json()
+        .then(data => {
+            const ul = document.createElement("ul");
+            ul.className = "order-history-items-list";
+            
+            data.forEach(item => {
+                
+//                    console.log(item);
+                
+                    // Create list item to hold item card
+                    const li = document.createElement("li");
+                    li.className = "catalog_item";
+
+                    // Create & fill base item div contents
+                    const div = createItemBaseContents(li, item, false);
+                    
+                    // Quantity selection
+                        
+                    const quant_select = document.createElement("div");
+                    quant_select.id = "quant_select";
+
+                    const quant_label = document.createElement("span");
+                    quant_label.id = "quant_label";
+                    quant_label.textContent = "Quantity:";
+
+                    const quant = document.createElement("select");
+                    quant.id = "item_quant";
+                    quant.disabled = true;
+                    for (let i = 1; i <= 25; i++) {
+                        const option = document.createElement("option");
+                        option.value = i;
+                        option.text = i;
+                        quant.add(option);
+                    }
+                    quant.value = item["QUANT"];
+                        
+                    quant_select.appendChild(quant_label);
+                    quant_select.appendChild(quant);
+
+
+                    // Compose the item info from its parts
+                    div.appendChild(quant_select);
+
+                    // Compose the list of items
+                    li.appendChild(div);
+                    ul.appendChild(li);
+                }
+            );
+            target.appendChild(ul);
+            }
+        )
+    );
+}
+
+async function displayOrder(items_list_target, order_summary_target, id_order) {
+    await setOrderHistoryItemsDisplay(items_list_target, id_order);
+    //THIS DIDN'T WORK =/
+    //SOMETHING TO DO WITH TIMING, MAYBE FIGURE IT OUT LATER, BUT SPENT TOO MUCH TIME ALREADY
+//    await setOrderSummaryDisplay(
+//        order_summary_target,
+//        items_list_target.querySelectorAll(".order-history-items-list li")
+//    );
 }
