@@ -178,7 +178,7 @@ class StoreDB {
         UPDATE 
             `".$this->db_name."`.`entity_items` 
         SET 
-            `desc` = '".$name."',
+            `name` = '".$name."',
             `desc` = '".$desc."'
         WHERE
             `id_item` = '".$id_item."'";
