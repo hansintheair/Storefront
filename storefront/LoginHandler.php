@@ -22,14 +22,16 @@ if (!($userdata["EMAIL"] == $email && password_verify($password, $userdata["PASS
    exit;
 }
 
+$_SESSION["user_id"] = $userdata["USER_UID"];
+$_SESSION["admin"] = $userdata["TYPE"];
+
 // Login redirect
 // User login
 if ($userdata["TYPE"] == 0) {
-    $_SESSION["user_id"] = $userdata["USER_UID"];
     header("Location: UserCatalog.php");
 }
 // Admin login
 else {
-    //header("Location: Admin.php");  //NOT IMPLEMENTED
+    header("Location: AdminCatalog.php");
 }
 

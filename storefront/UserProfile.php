@@ -17,7 +17,15 @@
     
     <body>
         
-        <?php include 'UserNavbarComponent.php';?>
+        <?php 
+        if ($_SESSION["admin"] == 0) {
+            include 'UserNavbarComponent.php';
+        }
+        else {
+            include "AdminNavbarComponent.php";
+        }
+        ?>
+        
         <script>
             document.getElementsByClassName("searchbar")[0].style.display = "none";
             document.getElementsByClassName("cart")[0].style.display = "none";
