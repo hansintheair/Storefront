@@ -8,7 +8,7 @@
     <head>
         <title>User Profile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <script type="text/javascript" src="DisplayItemController.js"></script>
+        <script type="text/javascript" src="UserDisplayItemController.js"></script>
         <script type="text/javascript" src="messages.js"></script>
         <link rel="stylesheet" href="styles/navbar.css">
         <link rel="stylesheet" href="styles/catalog.css">

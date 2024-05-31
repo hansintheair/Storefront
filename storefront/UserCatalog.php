@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="styles/navbar.css">
         <link rel="stylesheet" href="styles/catalog.css">
-        <script type="text/javascript" src="DisplayItemController.js"></script>
+        <script type="text/javascript" src="UserDisplayItemController.js"></script>
     </head>
     
     <body>

@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="styles/catalog.css">
         <link rel="stylesheet" href="styles/sidebar.css">
         <link rel="stylesheet" href="styles/orders_history.css">
-        <script type="text/javascript" src="DisplayItemController.js"></script>
+        <script type="text/javascript" src="UserDisplayItemController.js"></script>
     </head>
     
     <body>
