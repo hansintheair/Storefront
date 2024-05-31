@@ -8,11 +8,13 @@
     <head>
         <title>User Profile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <script type="text/javascript" src="DisplayItemController.js"></script>
+        <script type="text/javascript" src="messages.js"></script>
         <link rel="stylesheet" href="styles/navbar.css">
         <link rel="stylesheet" href="styles/catalog.css">
         <link rel="stylesheet" href="styles/cart_summary.css">
         <link rel="stylesheet" href="styles/sidebar.css">
-        <script type="text/javascript" src="DisplayItemController.js"></script>
+        <link rel="stylesheet" href="styles/messages.css">
     </head>
     
     <body>
@@ -27,6 +29,7 @@
                     <form action="PlaceOrderController.php" method="post">
                         <p><span><b>Order total</b></span><br><span>$</span><span id="order-total"></span></p>
                         <button type="submit">Place order</button>
+                        <span class="error" id="error"><?php echo isset($_SESSION['is_empty']) ? $_SESSION['is_empty'] : "";?></span>
                     </form>
                     
                 </div>
@@ -48,6 +51,11 @@
             document.getElementById("order-total").textContent = total.toFixed(2);
         }
         main();
+        errorMessageTimeout();
     </script>
+    
+    <?php
+        unset($_SESSION['is_empty']);
+    ?>
     
 </html>

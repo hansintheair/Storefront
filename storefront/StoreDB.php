@@ -313,7 +313,7 @@ class StoreDB {
         $query = "
         SELECT 
             `entity_orders`.`id_order` AS `ID_ORDER`,
-            `entity_orders`.`oder_date` AS `ORDER_DATE`
+            `entity_orders`.`order_date` AS `ORDER_DATE`
         FROM
             `".$this->db_name."`.`xref_users_orders` AS `xref_users_orders`,
             `".$this->db_name."`.`entity_users` AS `entity_users`,
@@ -350,24 +350,86 @@ class StoreDB {
         return $this->db->query($query)->fetch_all(MYSQLI_ASSOC);
     }
     
+    function addItemToOrder($id_order, $id_item, $quant, $price) {
+               
+        // Insert a new cart item record into the entity_cartitems table
+        $query = "
+        INSERT INTO
+            `".$this->db_name."`.`entity_orderitems` (`id_item`, `quant`, `price_per_unit`)
+        VALUES
+            ('".$id_item."', '".$quant."', '".$price."')";
+        $this->db->query($query);
+        
+        // Get id of inserted item
+        $id_orderitem = $this->db->insert_id;
+        
+        // Insert a cross reference record into the xref_orders_orderitems table
+        $query = "
+        INSERT INTO
+            `".$this->db_name."`.`xref_orders_orderitems` (`id_order`, `id_orderitem`)
+        VALUES
+            ('".$id_order."', '".$id_orderitem."')";
+        $this->db->query($query);
+    }
+    
+    function addOrder($id_user, $order_date) {
+        $query = "
+        INSERT INTO
+            `".$this->db_name."`.`entity_orders` (`order_date`)
+        VALUES
+            ('".$order_date."')";
+        $this->db->query($query);
+        
+        // Get id of inserted order
+        $id_order = $this->db->insert_id;
+        
+        // Insert a cross reference record into the xref_users_cartitems table
+        $query = "
+        INSERT INTO
+            `".$this->db_name."`.`xref_users_orders` (`id_user`, `id_order`)
+        VALUES
+            ('".$id_user."', '".$id_order."')";
+        $this->db->query($query);
+        
+        return $id_order;
+    }
+    
     function placeOrder($id_user) {
         error_log("IN StoreDB.placeOrder");
 
         $cart_items = $this->getCart($id_user);
-        
-        $i = 0;  //DEBUG
-        echo "<br>";  //DEBUG
-        foreach($cart_items as $item) {
-            echo "[".$i."]<br>";  //DEBUG
-            $id_item = $item["ID_ITEM"];
-            echo "id_item: ".$id_item."<br>";  //DEBUG
-            $id_cartitem = $item["ID_CARTITEM"];
-            echo "id_cartitem: ".$id_cartitem."<br>";  //DEBUG
-            $quant_cartitem = $item["QUANT"];
-            echo "quant_cartitem: ".$quant_cartitem."<br>";  //DEBUG
-            $i++;  //DEBUG
+
+        if (empty($cart_items)) {
+            return false;
         }
         
+        $datetime = new DateTime("now", new DateTimeZone('UTC'));
+        $datetime_str = $datetime->format('Y-m-d H:i:s');
+        $id_order = $this->addOrder($id_user, $datetime_str);
+
+//        $i = 0;  //DEBUG
+//        echo "<br>";  //DEBUG
+        foreach($cart_items as $cart_item) {
+//            echo "[".$i."]<br>";  //DEBUG
+            $id_item = $cart_item["ID_ITEM"];
+//            echo "id_item: ".$id_item."<br>";  //DEBUG
+            $id_cartitem = $cart_item["ID_CARTITEM"];
+//            echo "id_cartitem: ".$id_cartitem."<br>";  //DEBUG
+            $quant = $cart_item["QUANT"];
+//            echo "quant: ".$quant."<br>";  //DEBUG
+            $price= $cart_item["PRICE"];
+//            echo "price: ".$price."<br>";  //DEBUG
+            $stock = $cart_item["STOCK"];
+//            echo "stock: ".$stock."<br>";  //DEBUG
+            $new_stock = $stock - $quant;
+//            echo "new_stock: ".$new_stock."<br>";  //DEBUG
+//            $i++;  //DEBUG
+            
+            $this->addItemToOrder($id_order, $id_item, $quant, $price);
+            $this->delItemInCart($id_cartitem);
+            $this->setCatalogItemQuant($id_item, $new_stock);
+        }
+        return true;
     }
     
 }

@@ -16,4 +16,11 @@ function placeOrder($id_user) {
     $store_db->disconnect();
 }
 
+if (empty($cart_items)) {
+    $_SESSION["is_empty"] = "Cart is empty";
+    header("Location: UserCart.php");
+}
+
 placeOrder($id_user);
+
+header("Location: UserCart.php");
