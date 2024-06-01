@@ -22,7 +22,7 @@ if (!($userdata["EMAIL"] == $email && password_verify($password, $userdata["PASS
    exit;
 }
 
-$_SESSION["user_id"] = $userdata["USER_UID"];
+$_SESSION["user_id"] = $userdata["ID_USER"];
 $_SESSION["admin"] = $userdata["TYPE"];
 
 // Login redirect

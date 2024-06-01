@@ -67,7 +67,7 @@ class StoreDB {
     function getUser($email) {
         $query = "
         SELECT 
-            `id_user` AS `USER_UID`,
+            `id_user` AS `ID_USER`,
             `email` AS `EMAIL`,
             `password` AS `PASSWORD`,
             `type` AS `TYPE`
@@ -76,6 +76,18 @@ class StoreDB {
         WHERE
             `email` = '".$email."'";
         return $this->db->query($query)->fetch_assoc();
+    }
+    
+    function getUsers() {
+        $query = "
+        SELECT 
+            `id_user` AS `ID_USER`,
+            `email` AS `EMAIL`,
+            `password` AS `PASSWORD`,
+            `type` AS `TYPE`
+        FROM
+            `".$this->db_name."`.`entity_users` AS `entity_users`";
+        return $this->db->query($query)->fetch_all(MYSQLI_ASSOC);
     }
     
     function setUserEmailByID($id_user, $email) {
@@ -103,7 +115,7 @@ class StoreDB {
     function getUserByID($id_user) {
         $query = "
         SELECT 
-            `id_user` AS `USER_UID`,
+            `id_user` AS `ID_USER`,
             `email` AS `EMAIL`,
             `password` AS `PASSWORD`,
             `type` AS `TYPE`
