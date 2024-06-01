@@ -1,0 +1,38 @@
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.items-pane {
+    display: flex;
+}
+
+.items_list li {
+    list-style-type: none;
+    /*border-bottom: 1px solid black;*/
+}
+
+.items_list li div {
+    padding: 10px;
+    background-color: #f4f3f0;
+    border-radius: 8px;
+}
+
+form input,
+form button,
+form select,
+form textarea {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#add-item-to-catalog {
+    position: fixed;
+}
+
+.accounts_list{
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    gap: 20px;
+    padding: 10px;
+}

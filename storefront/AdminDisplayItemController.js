@@ -112,3 +112,112 @@ function setCatalogDisplay(target) {
         )
     );
 }
+
+function setAccountsListDisplay(target) {
+        fetch("DisplayAccountsListController.php")
+            .then(response => response.json()
+            .then(data => {
+                const ul = document.createElement("ul");
+                ul.className = "accounts_list";
+
+                data.forEach(item => {
+                        const li = document.createElement("li");
+                        li.className = "account_item";
+                        li.id = "account-"+item["ID_USER"];
+                        
+                        // Create & fill base item div contents
+                        const div = document.createElement("div");
+                        
+                        // Form for updating item values
+                        
+                        const form_update = document.createElement("form");
+                        form_update.action = "UpdateAccountValues.php";
+                        form_update.method = "POST";
+                        
+                        const id_user_upd = document.createElement("input");
+                        id_user_upd.type = "hidden";
+                        id_user_upd.name = "id_user";
+                        id_user_upd.value = item["ID_USER"];
+                        
+                        const email_label = document.createElement("label");
+                        email_label.textContent = "E-mail:";
+                        email_label.setAttribute("for", "email");
+                        const email = document.createElement("input");
+                        email.id = "email";
+                        email.name = "email";
+                        email.type = "email";
+                        email.value = item["EMAIL"];
+                          
+                        const isadmin_label = document.createElement("label");
+                        isadmin_label.textContent = "Is Admin:";
+                        isadmin_label.setAttribute("for", "isadmin");
+                        const isadmin = document.createElement("input");
+                        isadmin.id = "isadmin";
+                        isadmin.name = "isadmin";
+                        isadmin.type = "checkbox";
+                        isadmin.checked = (item["TYPE"]==="1");
+
+                        const update = document.createElement("button");
+                        update.type = "submit";
+                        update.textContent = "Update";
+                        
+                        form_update.appendChild(id_user_upd);
+                        form_update.appendChild(email_label);
+                        form_update.appendChild(email);
+                        form_update.appendChild(isadmin_label);
+                        form_update.appendChild(isadmin);
+                        form_update.appendChild(update);
+                        
+                        // Form for deleting item
+                        
+                        const form_delete = document.createElement("form");
+                        form_delete.id = "form-delete";
+                        form_delete.action = "DeleteAccountAsAdminController.php";
+                        form_delete.method = "POST";
+                        
+                        const id_item_del = document.createElement("input");
+                        id_item_del.type = "hidden";
+                        id_item_del.name = "id_user";
+                        id_item_del.value = item["ID_USER"];
+                        
+                        const del = document.createElement("button");
+                        del.type = "submit";
+                        del.textContent = "Delete";
+                        
+                        form_delete.appendChild(id_item_del);
+                        form_delete.appendChild(del);
+                        
+                        // Form for resetting password
+                        const form_reset = document.createElement("form");
+                        form_reset.id = "form-reset-passw";
+                        form_reset.action = "";
+                        form_reset.method = "POST";
+                        
+                        const id_user_reset = document.createElement("input");
+                        id_user_reset.type = "hidden";
+                        id_user_reset.name = "id_user";
+                        id_user_reset.value = item["ID_USER"];
+                        
+                        const reset = document.createElement("button");
+                        reset.type = "submit";
+                        reset.textContent = "Reset Password";
+                        
+                        form_reset.appendChild(id_user_reset);
+                        form_reset.appendChild(reset);
+                        
+                        // Compose the item card from its parts
+                        div.appendChild(form_update);
+                        div.appendChild(form_delete);
+                        div.appendChild(form_reset)
+                        
+                        // Compose the list of items
+
+                        li.appendChild(div);
+                        ul.appendChild(li);
+                    }
+                );
+                target.appendChild(ul);
+            }
+        )
+    );
+}
