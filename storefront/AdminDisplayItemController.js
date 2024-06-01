@@ -180,8 +180,8 @@ function setAccountsListDisplay(target, id_adminuser) {
                         
                         const form_delete = document.createElement("form");
                         form_delete.id = "form-delete";
-//                        form_delete.action = "DeleteAccountAsAdminController.php";
-//                        form_delete.method = "POST";
+                        form_delete.action = "DeleteAccountAsAdminController.php";
+                        form_delete.method = "POST";
                         
                         const id_item_del = document.createElement("input");
                         id_item_del.type = "hidden";
