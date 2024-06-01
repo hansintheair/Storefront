@@ -342,6 +342,7 @@ async function setOrdersDisplay(target, items_list_target) {
                     // Create div for order summary
                     const order_summary = document.createElement("div");
                     order_summary.className = "order-summary";
+                    console.log(order_summary);
 
                     // Create list item to hold item card
                     const li = document.createElement("li");
