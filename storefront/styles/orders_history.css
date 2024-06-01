@@ -14,9 +14,14 @@
     color: white;
 }
 
+.order-history-item.active {
+    background-color: #333;
+    color: white;
+}
+
 .divider {
-    border-bottom: 1px solid black;
-    margin: 5px
+    border-bottom: 1px solid lightgrey;
+    margin: 5px;
 }
 
 #item_quant {
@@ -24,5 +29,5 @@
     background-color: transparent;
     border: none;
     outline: none;
-
 }
+

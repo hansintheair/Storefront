@@ -1,4 +1,3 @@
-
 function createItemBaseContents(item, show_stock=true) {
     // Create div to hold item card parts
                         
@@ -328,14 +327,16 @@ async function getOrderTotal() {
 }
 
 async function setOrdersDisplay(target, items_list_target) {
-        
+    
+    let active_order;
+    
     fetch("DisplayOrderHistoryController.php")
         .then(response => response.json()
         .then(data => {
             const ul = document.createElement("ul");
             ul.className = "orders-history-list";
             
-            i = 0;
+            let i = 0;
             data.forEach(item => {
                 
                     // Create div for order summary
@@ -345,22 +346,34 @@ async function setOrdersDisplay(target, items_list_target) {
                     // Create list item to hold item card
                     const li = document.createElement("li");
                     li.className = "order-history-item";
+//                    li.id = `item-id-${item["ID_ORDER"]}`;
                     li.setAttribute("id_order", item["ID_ORDER"]);
-                    li.setAttribute("displayed", false);
                     li.onclick = async function() {
                         let id_order = this.getAttribute("id_order");
-                        let displayed = this.getAttribute("displayed") === "true";
-                        console.log("CLICKED ORDER " + id_order);  //DEBUG
+                        if (active_order) {
+                            document.querySelector(`.order-history-item[id_order="${active_order}"]`).classList.remove("active");
+                        }
+//                        console.log("CLICKED ORDER " + id_order);  //DEBUG
 //                        console.log("DISPLAYED: " + displayed);  //DEBUG
 //                        console.log("ORDER SUMMARY: " + order_summary);  //DEBUG
-                        if (!displayed) {
-                            await displayOrder(items_list_target, order_summary, id_order);
-                        } 
-                        else {
-                            items_list_target.innerHTML = null;
-                        }
-                        this.setAttribute("displayed", !displayed);
+                        items_list_target.innerHTML = null;
+                        this.classList.add("active");
+                        active_order = id_order;
+                        await displayOrder(items_list_target, order_summary, id_order);
                     };
+                    
+                    if (i === 0) {
+                        let id_order = li.getAttribute("id_order");
+                        active_order = id_order;
+                        li.classList.add("active");
+                        async function init_state() {
+                            await displayOrder(
+                                items_list_target,
+                                order_summary,
+                                id_order);
+                        }
+                        init_state();
+                    }
 
                     // Create base item div
                     const div = document.createElement("div");
@@ -378,11 +391,12 @@ async function setOrdersDisplay(target, items_list_target) {
                     li.appendChild(div);
                     ul.appendChild(li);
                     ul.appendChild(order_summary);
-                    if (i > 0 && i < data.length) {
+                    if (i < data.length-1) {
                         const divider = document.createElement("li");
                         divider.className = "divider";
                         ul.appendChild(divider);
                     }
+                    i+=1;
                 }
             );
             target.appendChild(ul);
