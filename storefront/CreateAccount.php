@@ -18,6 +18,8 @@
             <form class="menu-container" action="CreateAccountHandler.php" method="post">
                 E-mail<input type="email" name="email" pattern="^[A-Za-z0-9._\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$" title="invalid email address format" required><br>
                 Password<input type="password" name="password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,20})" title="Password must be at between 8 and 20 characters long, contain at least one of each: uppercase letter, lowercase letter, number, and special character !@#$%^&*" required><br>
+                <input type="hidden" name="isadmin" value="false">
+                <input name="return_location" type="hidden" value="CreateAccount.php">
                 <input type="submit" value="Register">
                 <span class="error"><?php echo isset($_SESSION["register_error"]) ? $_SESSION["register_error"] : "";?></span>
             </form>
