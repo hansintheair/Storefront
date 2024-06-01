@@ -40,7 +40,7 @@
             </div>
             <div class="items_list">
                 <script>
-                    setAccountsListDisplay(document.querySelector(".items_list"));
+                    setAccountsListDisplay(document.querySelector(".items_list"), <?php echo $_SESSION["user_id"]?>);
                     successMessageTimeout();
                     errorMessageTimeout();
                 </script>

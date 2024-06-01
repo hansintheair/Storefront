@@ -113,7 +113,7 @@ function setCatalogDisplay(target) {
     );
 }
 
-function setAccountsListDisplay(target) {
+function setAccountsListDisplay(target, id_adminuser) {
         fetch("DisplayAccountsListController.php")
             .then(response => response.json()
             .then(data => {
@@ -128,11 +128,15 @@ function setAccountsListDisplay(target) {
                         // Create & fill base item div contents
                         const div = document.createElement("div");
                         
-                        // Form for updating item values
+                        // User info  NOTE: Initially allowed update, but decided decided not to because:
+                        //  - Only users can change their e-mail address
+                        //  - A user account cannot be changed to an admin account and vice versa (because
+                        //    admins do not have a cart or orders, and so changing user to admin would re-
+                        //    quire deleting user account's cart and orders (or dissassociating them).
                         
                         const form_update = document.createElement("form");
-                        form_update.action = "UpdateAccountValues.php";
-                        form_update.method = "POST";
+//                        form_update.action = "UpdateAccountAsAdmin.php";
+//                        form_update.method = "POST";
                         
                         const id_user_upd = document.createElement("input");
                         id_user_upd.type = "hidden";
@@ -146,6 +150,9 @@ function setAccountsListDisplay(target) {
                         email.id = "email";
                         email.name = "email";
                         email.type = "email";
+//                        email.setAttribute("pattern", "^[A-Za-z0-9._\\-]+@[A-Za-z0-9.\\-]+\\.[A-Za-z]{2,}$");
+//                        email.setAttribute("title", "invalid email address format");
+                        email.disabled = true;
                         email.value = item["EMAIL"];
                           
                         const isadmin_label = document.createElement("label");
@@ -155,25 +162,26 @@ function setAccountsListDisplay(target) {
                         isadmin.id = "isadmin";
                         isadmin.name = "isadmin";
                         isadmin.type = "checkbox";
+                        isadmin.disabled = true;
                         isadmin.checked = (item["TYPE"]==="1");
 
-                        const update = document.createElement("button");
-                        update.type = "submit";
-                        update.textContent = "Update";
+//                        const update = document.createElement("button");
+//                        update.type = "submit";
+//                        update.textContent = "Update";
                         
                         form_update.appendChild(id_user_upd);
                         form_update.appendChild(email_label);
                         form_update.appendChild(email);
                         form_update.appendChild(isadmin_label);
                         form_update.appendChild(isadmin);
-                        form_update.appendChild(update);
+//                        form_update.appendChild(update);
                         
                         // Form for deleting item
                         
                         const form_delete = document.createElement("form");
                         form_delete.id = "form-delete";
-                        form_delete.action = "DeleteAccountAsAdminController.php";
-                        form_delete.method = "POST";
+//                        form_delete.action = "DeleteAccountAsAdminController.php";
+//                        form_delete.method = "POST";
                         
                         const id_item_del = document.createElement("input");
                         id_item_del.type = "hidden";
@@ -183,6 +191,10 @@ function setAccountsListDisplay(target) {
                         const del = document.createElement("button");
                         del.type = "submit";
                         del.textContent = "Delete";
+                        if (id_adminuser === Number(item["ID_USER"])) {
+                            del.disabled = true;
+                        }
+                        
                         
                         form_delete.appendChild(id_item_del);
                         form_delete.appendChild(del);
