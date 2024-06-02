@@ -1,5 +1,6 @@
 <?php
     include "SecureSessionComponent.php";
+    include "SecureAdminSessionComponent.php";
 ?>
 
 <!DOCTYPE html>
