@@ -78,3 +78,29 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.order-item-price {
+    display: inline-block;
+    margin-left: auto;
+    flex-wrap: nowrap;
+    color: gray;
+}
+
+.order-number-date {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+}
+
+.order-date {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.order-id {
+    display: inline-block;
+    margin-left: auto;
+    flex-wrap: nowrap;
+}

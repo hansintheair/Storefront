@@ -41,7 +41,8 @@
             await setOrdersDisplay(
                 document.querySelector(".orders-history"),
                 document.querySelector(".items_list"),
-                await getAllOrders()
+                await getAllOrders(),
+                true
             );
         }
             

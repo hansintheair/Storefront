@@ -52,12 +52,7 @@ body {
     width: 100%;
 }
 
-.order-item-price {
-    display: inline-block;
-    margin-left: auto;
-    flex-wrap: nowrap;
-    color: gray;
-}
+
 
 #item_price {
     display: inline-block;

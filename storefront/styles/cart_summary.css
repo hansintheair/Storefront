@@ -36,3 +36,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.order-item-price {
+    display: inline-block;
+    margin-left: auto;
+    flex-wrap: nowrap;
+    color: gray;
+}
