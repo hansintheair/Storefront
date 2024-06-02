@@ -86,7 +86,8 @@ async function setCatalogDisplay(target) {
             const quant = document.createElement("select");
             quant.id = "item_quant";
             quant.disabled = (item["IN_CART"] === "1" || item["STOCK"] < 1);
-            for (let i = 1; i <= 25; i++) {
+            let max_quant = 25;
+            for (let i = 1; i <= (item["STOCK"] >= max_quant ? max_quant : item["STOCK"]); i++) {
                 const option = document.createElement("option");
                 option.value = i;
                 option.text = i;
@@ -159,7 +160,8 @@ async function setCartDisplay(target, data) {
 
             const quant = document.createElement("select");
             quant.id = "item_quant";
-            for (let i = 1; i <= 25; i++) {
+            let max_quant = 25;
+            for (let i = 1; i <= (item["STOCK"] >= max_quant ? max_quant : item["STOCK"]); i++) {
                 const option = document.createElement("option");
                 option.value = i;
                 option.text = i;
