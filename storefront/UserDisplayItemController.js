@@ -353,7 +353,7 @@ async function getOrderTotal() {
 
 async function getUserOrders() {
     return await fetch(
-        "DisplayOrderHistoryController.php"
+        "DisplayOrderHistoryForUserController.php"
     ).then(response => response.json());
 }
 
