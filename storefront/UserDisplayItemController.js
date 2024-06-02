@@ -100,7 +100,7 @@ async function setCatalogDisplay(target) {
             const add = document.createElement("button");
             add.id = "add_item";
             add.textContent = (item["IN_CART"] === "1") ? "In cart" : "Add to cart";
-            add.disabled = (item["IN_CART"] === "1");
+            add.disabled = (item["IN_CART"] === "1" || item["STOCK"] < 1);
             add.setAttribute("id_item", item["ID_ITEM"]);
             add.onclick = function() {
                 let id_item = this.getAttribute("id_item");
