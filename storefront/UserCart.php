@@ -42,10 +42,11 @@
     
     <script>
         async function main() {
-            await setCartDisplay(document.querySelector(".items_list"));
+            let cart_items = await getCartItems();
+            await setCartDisplay(document.querySelector(".items_list"), cart_items);
             await setOrderSummaryDisplay(
                 document.querySelector(".order-summary"),
-                document.querySelectorAll(".cart_list li")
+                cart_items
             );
             let total = await getOrderTotal();
             document.getElementById("order-total").textContent = total.toFixed(2);

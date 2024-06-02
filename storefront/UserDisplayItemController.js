@@ -128,82 +128,82 @@ function setCatalogDisplay(target) {
     );
 }
 
-async function setCartDisplay(target) {
-        await fetch("DisplayCartController.php")
-        .then(response => response.json()
-        .then(data => {
-                const ul = document.createElement("ul");
-                ul.className = "cart_list";
+async function getCartItems() {
+    return await fetch("DisplayCartController.php").then(response => response.json());
+}
 
-                data.forEach(item => {
-                    
-                        // Create list item to hold item card
-                        const li = document.createElement("li");
-                        li.className = "catalog_item";
-                        
-                        // Create & fill base item div contents
-                        const div = createItemBaseContents(item);
-                        
-                        // Quantity selection
-                        
-                        const quant_select = document.createElement("div");
-                        quant_select.id = "quant_select";
-                        
-                        const quant_label = document.createElement("span");
-                        quant_label.id = "quant_label";
-                        quant_label.textContent = "Quantity:";
+async function setCartDisplay(target, data) {
+    
+    const ul = document.createElement("ul");
+    ul.className = "cart_list";
 
-                        const quant = document.createElement("select");
-                        quant.id = "item_quant";
-                        for (let i = 1; i <= 25; i++) {
-                            const option = document.createElement("option");
-                            option.value = i;
-                            option.text = i;
-                            quant.add(option);
-                        }
-                        quant.value = item["QUANT"];
-                        quant.setAttribute("id_cartitem", item["ID_CARTITEM"]);
-                        quant.onchange = function() {
-                            let id_cartitem = this.getAttribute("id_cartitem");
-                            console.log(this.value);
-                            updateCartItemQuant(id_cartitem, this.value);
-                            location.reload();
-                        };
-                        
-                        quant_select.appendChild(quant_label);
-                        quant_select.appendChild(quant);
-                        
-                        // Remove from cart option
-                        const remove = document.createElement("button");
-                        remove.id = "remove_item";
-                        remove.textContent = "Remove";
-                        remove.setAttribute("id_cartitem", item["ID_CARTITEM"]);
-                        remove.onclick = function() {
-                            let id_cartitem = this.getAttribute("id_cartitem");
-                            remItemFromCart(id_cartitem);
-                            location.reload();
-                        };
-                        
-                        // Create & compose div to hold quantity selection and remove from cart option
-                        
-                        const quant_option = document.createElement("div");
-                        quant_option.id = "quant_option";
-                        
-                        quant_option.appendChild(quant_select);
-                        quant_option.appendChild(remove);
-                        
-                        // Compose the item card from its parts
-                        div.appendChild(quant_option);
-                        
-                        // Compose the list of items
-                        li.appendChild(div);
-                        ul.appendChild(li);
-                    }
-                );
-                target.appendChild(ul);
+    data.forEach(
+        item => {
+
+            // Create list item to hold item card
+            const li = document.createElement("li");
+            li.className = "catalog_item";
+
+            // Create & fill base item div contents
+            const div = createItemBaseContents(item);
+
+            // Quantity selection
+
+            const quant_select = document.createElement("div");
+            quant_select.id = "quant_select";
+
+            const quant_label = document.createElement("span");
+            quant_label.id = "quant_label";
+            quant_label.textContent = "Quantity:";
+
+            const quant = document.createElement("select");
+            quant.id = "item_quant";
+            for (let i = 1; i <= 25; i++) {
+                const option = document.createElement("option");
+                option.value = i;
+                option.text = i;
+                quant.add(option);
             }
-        )
+            quant.value = item["QUANT"];
+            quant.setAttribute("id_cartitem", item["ID_CARTITEM"]);
+            quant.onchange = function() {
+                let id_cartitem = this.getAttribute("id_cartitem");
+                console.log(this.value);
+                updateCartItemQuant(id_cartitem, this.value);
+                location.reload();
+            };
+
+            quant_select.appendChild(quant_label);
+            quant_select.appendChild(quant);
+
+            // Remove from cart option
+            const remove = document.createElement("button");
+            remove.id = "remove_item";
+            remove.textContent = "Remove";
+            remove.setAttribute("id_cartitem", item["ID_CARTITEM"]);
+            remove.onclick = function() {
+                let id_cartitem = this.getAttribute("id_cartitem");
+                remItemFromCart(id_cartitem);
+                location.reload();
+            };
+
+            // Create & compose div to hold quantity selection and remove from cart option
+
+            const quant_option = document.createElement("div");
+            quant_option.id = "quant_option";
+
+            quant_option.appendChild(quant_select);
+            quant_option.appendChild(remove);
+
+            // Compose the item card from its parts
+            div.appendChild(quant_option);
+
+            // Compose the list of items
+            li.appendChild(div);
+            ul.appendChild(li);
+        }
     );
+    target.appendChild(ul);
 }
 
 function updateCartItemQuant(id_cartitem, quant) {
@@ -253,8 +253,10 @@ async function setOrderSummaryDisplay(target, items) {
         
             console.log(item);
         
-            let quantvar = item.querySelector("#item_quant").value;
-            let pricevar = item.querySelector("#item_price").value;
+//            let quantvar = item.querySelector("#item_quant").value;
+            let quantvar = item["QUANT"];
+//            let pricevar = item.querySelector("#item_price").value;
+            let pricevar = item["PRICE"];
             let subtovar = (quantvar * pricevar).toFixed(2);
             
             // Create list item to hold item card
@@ -271,7 +273,7 @@ async function setOrderSummaryDisplay(target, items) {
             
             const name = document.createElement("span");
             name.className = "order-item-name";
-            name.textContent = item.querySelector("#item_name").textContent;
+            name.textContent = item["NAME"];
             
             const price = document.createElement("span");
             price.className = "order-item-price";
