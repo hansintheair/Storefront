@@ -52,80 +52,81 @@ function createItemBaseContents(item, show_stock=true) {
     return div;
 }
 
-function setCatalogDisplay(target) {
-        fetch("DisplayCatalogController.php")
-            .then(response => response.json()
-            .then(data => {
-                const ul = document.createElement("ul");
-                ul.className = "catalog_list";
+async function setCatalogDisplay(target) {
+        
+    let data  = await fetch(
+        "DisplayCatalogController.php"
+    ).then(response => response.json());
+    
+    const ul = document.createElement("ul");
+    ul.className = "catalog_list";
 
-                data.forEach(item => {
-                        const li = document.createElement("li");
-                        li.className = "catalog_item";
-                        li.id = "item-"+item["ID_ITEM"];
-                        
-                        // Create & fill base item div contents
-                        const div = createItemBaseContents(item);
-                        
-                        // Quantity selection
-                        
-                        const quant_select = document.createElement("div");
-                        quant_select.id = "quant_select";
-                        if (item["IN_CART"] === "1") {
-                            quant_select.className = "disabled";
-                        }
-                        
-                        const quant_label = document.createElement("span");
-                        quant_label.id = "quant_label";
-                        quant_label.textContent = "Quantity:";
+    data.forEach(
+        item => {
+            
+            const li = document.createElement("li");
+            li.className = "catalog_item";
+            li.id = "item-"+item["ID_ITEM"];
 
-                        const quant = document.createElement("select");
-                        quant.id = "item_quant";
-                        quant.disabled = (item["IN_CART"] === "1");
-                        for (let i = 1; i <= 25; i++) {
-                            const option = document.createElement("option");
-                            option.value = i;
-                            option.text = i;
-                            quant.add(option);
-                        }
-                        
-                        quant_select.appendChild(quant_label);
-                        quant_select.appendChild(quant);
-                        
-                        // Add to cart option
-                        const add = document.createElement("button");
-                        add.id = "add_item";
-                        add.textContent = (item["IN_CART"] === "1") ? "In cart" : "Add to cart";
-                        add.disabled = (item["IN_CART"] === "1");
-                        add.setAttribute("id_item", item["ID_ITEM"]);
-                        add.onclick = function() {
-                            let id_item = this.getAttribute("id_item");
-                            let quant = document.querySelector("#item-"+id_item+" #item_quant").value;
-                            addItemToCart(id_item, quant);
-                            location.reload();
-                        };
-                        
-                        // Create & compose div to hold quantity selection and add to cart option
-                        
-                        const quant_option = document.createElement("div");
-                        quant_option.id = "quant_option";
-                        
-                        quant_option.appendChild(quant_select);
-                        quant_option.appendChild(add);
-                        
-                        // Compose the item card from its parts
-                        div.appendChild(quant_option);
-                        
-                        // Compose the list of items
+            // Create & fill base item div contents
+            const div = createItemBaseContents(item);
 
-                        li.appendChild(div);
-                        ul.appendChild(li);
-                    }
-                );
-                target.appendChild(ul);
+            // Quantity selection
+
+            const quant_select = document.createElement("div");
+            quant_select.id = "quant_select";
+            if (item["IN_CART"] === "1") {
+                quant_select.className = "disabled";
             }
-        )
+
+            const quant_label = document.createElement("span");
+            quant_label.id = "quant_label";
+            quant_label.textContent = "Quantity:";
+
+            const quant = document.createElement("select");
+            quant.id = "item_quant";
+            quant.disabled = (item["IN_CART"] === "1");
+            for (let i = 1; i <= 25; i++) {
+                const option = document.createElement("option");
+                option.value = i;
+                option.text = i;
+                quant.add(option);
+            }
+
+            quant_select.appendChild(quant_label);
+            quant_select.appendChild(quant);
+
+            // Add to cart option
+            const add = document.createElement("button");
+            add.id = "add_item";
+            add.textContent = (item["IN_CART"] === "1") ? "In cart" : "Add to cart";
+            add.disabled = (item["IN_CART"] === "1");
+            add.setAttribute("id_item", item["ID_ITEM"]);
+            add.onclick = function() {
+                let id_item = this.getAttribute("id_item");
+                let quant = document.querySelector("#item-"+id_item+" #item_quant").value;
+                addItemToCart(id_item, quant);
+                location.reload();
+            };
+
+            // Create & compose div to hold quantity selection and add to cart option
+
+            const quant_option = document.createElement("div");
+            quant_option.id = "quant_option";
+
+            quant_option.appendChild(quant_select);
+            quant_option.appendChild(add);
+
+            // Compose the item card from its parts
+            div.appendChild(quant_option);
+
+            // Compose the list of items
+
+            li.appendChild(div);
+            ul.appendChild(li);
+        }
     );
+    target.appendChild(ul);
 }
 
 async function getCartItems() {
@@ -249,7 +250,8 @@ async function setOrderSummaryDisplay(target, items) {
     console.log("ITEMS = " + items);  //DEBUG
     console.log("TARGET = " + target);  //DEBUG
     
-    items.forEach(item => {
+    items.forEach(
+        item => {
         
             console.log(item);
         
@@ -332,77 +334,75 @@ async function setOrdersDisplay(target, items_list_target) {
     
     let active_order;
     
-    fetch("DisplayOrderHistoryController.php")
-        .then(response => response.json()
-        .then(data => {
-            const ul = document.createElement("ul");
-            ul.className = "orders-history-list";
-            
-            let i = 0;
-            data.forEach(
-                item => {
-                
-                    // Create list item to hold item card
-                    const li = document.createElement("li");
-                    li.className = "order-history-item";
+    let data = await fetch(
+        "DisplayOrderHistoryController.php"
+    ).then(response => response.json());
+        
+    const ul = document.createElement("ul");
+    ul.className = "orders-history-list";
+
+    let i = 0;
+    data.forEach(
+        item => {
+
+            // Create list item to hold item card
+            const li = document.createElement("li");
+            li.className = "order-history-item";
 //                    li.id = `item-id-${item["ID_ORDER"]}`;
-                    li.setAttribute("id_order", item["ID_ORDER"]);
-                    
-                    li.onclick = async function() {
-                        let id_order = this.getAttribute("id_order");
-                        if (active_order) {
-                            document.querySelector(
-                                `.order-history-item[id_order="${active_order}"]`
-                            ).classList.remove("active");
-                        }
-//                        console.log("CLICKED ORDER " + id_order);  //DEBUG
-//                        console.log("DISPLAYED: " + displayed);  //DEBUG
-//                        console.log("ORDER SUMMARY: " + order_summary);  //DEBUG
-                        items_list_target.innerHTML = null;
-                        this.classList.add("active");
-                        active_order = id_order;
-                        await setOrderItemsDisplay(items_list_target, id_order);
-                    };
-                    
-                    if (i === 0) {
-                        let id_order = li.getAttribute("id_order");
-                        active_order = id_order;
-                        li.classList.add("active");
-                        async function init_state() {
-                            await setOrderItemsDisplay(
-                                items_list_target,
-                                id_order);
-                        }
-                        init_state();
-                    }
+            li.setAttribute("id_order", item["ID_ORDER"]);
 
-                    // Create base item div
-                    const div = document.createElement("div");
-                    div.className = "order-number-date";
-
-                    const order_date = document.createElement("span");
-                    order_date.className = "order-date";
-                    let date = item["ORDER_DATE"];
-                    order_date.textContent = date;
-                    
-                    // Compose the item info from its parts
-                    div.appendChild(order_date);
-
-                    // Compose the list of items
-                    li.appendChild(div);
-                    ul.appendChild(li);
-                    if (i < data.length-1) {
-                        const divider = document.createElement("li");
-                        divider.className = "divider";
-                        ul.appendChild(divider);
-                    }
-                    i+=1;
+            li.onclick = async function() {
+                let id_order = this.getAttribute("id_order");
+                if (active_order) {
+                    document.querySelector(
+                        `.order-history-item[id_order="${active_order}"]`
+                    ).classList.remove("active");
                 }
-            );
-            target.appendChild(ul);
+//                console.log("CLICKED ORDER " + id_order);  //DEBUG
+//                console.log("DISPLAYED: " + displayed);  //DEBUG
+//                console.log("ORDER SUMMARY: " + order_summary);  //DEBUG
+                items_list_target.innerHTML = null;
+                this.classList.add("active");
+                active_order = id_order;
+                await setOrderItemsDisplay(items_list_target, id_order);
+            };
+
+            if (i === 0) {
+                let id_order = li.getAttribute("id_order");
+                active_order = id_order;
+                li.classList.add("active");
+                async function init_state() {
+                    await setOrderItemsDisplay(
+                        items_list_target,
+                        id_order);
+                }
+                init_state();
             }
-        )
+
+            // Create base item div
+            const div = document.createElement("div");
+            div.className = "order-number-date";
+
+            const order_date = document.createElement("span");
+            order_date.className = "order-date";
+            let date = item["ORDER_DATE"];
+            order_date.textContent = date;
+
+            // Compose the item info from its parts
+            div.appendChild(order_date);
+
+            // Compose the list of items
+            li.appendChild(div);
+            ul.appendChild(li);
+            if (i < data.length-1) {
+                const divider = document.createElement("li");
+                divider.className = "divider";
+                ul.appendChild(divider);
+            }
+            i+=1;
+        }
     );
+    target.appendChild(ul);
 }
 
 async function getOrderItems(id_order) {
