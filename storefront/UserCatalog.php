@@ -22,6 +22,8 @@
             <div class="items_list">
                 <script>
                     
+                    setActive("catalog-tab");
+                    
                     async function main() {
                         await setCatalogDisplay(document.querySelector(".items_list"));
                     };
@@ -30,8 +32,6 @@
                 </script>
             </div>
         </div>
-        
-        <div id="test"></div>
         
     </body>
     

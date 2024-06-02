@@ -41,6 +41,8 @@
     
     <script>
         
+        setActive("cart-tab");
+        
         async function main() {
             let cart_items = await getCartItems();
             await setCartDisplay(document.querySelector(".items_list"), cart_items);

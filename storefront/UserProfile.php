@@ -83,6 +83,9 @@
         </div>
         
         <script>
+            
+            setActive("profile-tab");
+            
             successMessageTimeout();
             errorMessageTimeout();
         </script>

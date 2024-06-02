@@ -30,6 +30,8 @@
         
         <script>
             
+            setActive("orders-tab");
+            
             async function main() {
                 await setOrdersDisplay(
                     document.querySelector(".orders-history"),
