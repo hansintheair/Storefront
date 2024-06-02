@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="styles/navbar.css">
         <link rel="stylesheet" href="styles/catalog.css">
         <script type="text/javascript" src="UserDisplayItemController.js"></script>
+        <script type="text/javascript" src="navbarTabManager.js"></script>
     </head>
     
     <body>

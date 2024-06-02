@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="styles/sidebar.css">
         <link rel="stylesheet" href="styles/orders_history.css">
         <script type="text/javascript" src="UserDisplayItemController.js"></script>
+        <script type="text/javascript" src="navbarTabManager.js"></script>
     </head>
     
     <body>

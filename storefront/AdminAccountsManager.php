@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="styles/messages.css">
         <script type="text/javascript" src="AdminDisplayItemController.js"></script>
         <script type="text/javascript" src="messages.js"></script>
+        <script type="text/javascript" src="navbarTabManager.js"></script>
     </head>
     
     <body>
@@ -41,9 +42,18 @@
             </div>
             <div class="items_list">
                 <script>
-                    setAccountsListDisplay(document.querySelector(".items_list"), <?php echo $_SESSION["user_id"]?>);
+                    
+                    setActive("accounts-tab");
+                    
+                    async function main() {
+                        setAccountsListDisplay(document.querySelector(".items_list"), <?php echo $_SESSION["user_id"]?>);
+                    }
+                    
+                    main();
+                    
                     successMessageTimeout();
                     errorMessageTimeout();
+                    
                 </script>
             </div>
         </div>

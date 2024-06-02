@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="styles/catalog.css">
         <link rel="stylesheet" href="styles/fields.css">
         <link rel="stylesheet" href="styles/orders_history.css">
+        <script type="text/javascript" src="navbarTabManager.js"></script>
     </head>
     
     <body>
@@ -41,6 +42,8 @@
     </body>
     
     <script>
+        
+        setActive("earnings-tab");
         
         async function main() {
             await setOrdersDisplay(

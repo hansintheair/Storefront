@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="styles/sidebar.css">
         <link rel="stylesheet" href="styles/admin_catalog.css">
         <script type="text/javascript" src="AdminDisplayItemController.js"></script>
+        <script type="text/javascript" src="navbarTabManager.js"></script>
     </head>
     
     <body>
@@ -40,7 +41,15 @@
             </div>
             <div class="items_list">
                 <script>
-                    setCatalogDisplay(document.querySelector(".items_list"));
+                    
+                    setActive("catalog-tab");
+                    
+                    async function main() {
+                        await setCatalogDisplay(document.querySelector(".items_list"));
+                    }
+                    
+                    main();
+                
                 </script>
             </div>
         </div>

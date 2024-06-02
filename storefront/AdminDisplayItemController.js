@@ -1,5 +1,5 @@
 
-function setCatalogDisplay(target) {
+async function setCatalogDisplay(target) {
         fetch("DisplayCatalogController.php")
             .then(response => response.json()
             .then(data => {
@@ -113,7 +113,7 @@ function setCatalogDisplay(target) {
     );
 }
 
-function setAccountsListDisplay(target, id_adminuser) {
+async function setAccountsListDisplay(target, id_adminuser) {
         fetch("DisplayAccountsListController.php")
             .then(response => response.json()
             .then(data => {
