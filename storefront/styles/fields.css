@@ -1,0 +1,12 @@
+.field {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+}
+
+.field-value {
+    display: inline-block;
+    margin-left: auto;
+    flex-wrap: nowrap;
+}

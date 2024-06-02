@@ -393,7 +393,7 @@ async function setOrdersDisplay(orders_history_target, order_items_target, data,
                 if (show_details) {  // Show user email
                     let email = document.createElement("p");
                     email.class = "email";
-                    email.textContent = item["EMAIL"];
+                    email.textContent = "User: " + item["EMAIL"];
                     order_summary.appendChild(email);
                 }
                 
@@ -428,7 +428,7 @@ async function setOrdersDisplay(orders_history_target, order_items_target, data,
                 if (show_details) {  // Show user email
                     let email = document.createElement("p");
                     email.class = "email";
-                    email.textContent = item["EMAIL"];
+                    email.textContent = "User: " + item["EMAIL"];
                     order_summary.appendChild(email);
                 }
                                 

@@ -468,6 +468,29 @@ function getAllOrders() {
         return $this->db->query($query)->fetch_all(MYSQLI_ASSOC);
     }
     
+    function getAllOrderItems() {
+       $query = "
+        SELECT 
+            `xref_orders_orderitems`.`id_orderitem` AS `ID_ORDERITEM`,
+            `entity_orderitems`.`id_item` AS `ID_ITEM`,
+            `entity_items`.`name` AS `NAME`,
+            `entity_items`.`desc` AS `DESC`,
+            `entity_orderitems`.`price_per_unit` AS `PRICE`,
+            `entity_orderitems`.`quant` AS `QUANT`
+        FROM
+            `".$this->db_name."`.`xref_users_orders` AS `xref_users_orders`,
+            `".$this->db_name."`.`entity_users` AS `entity_users`,
+            `".$this->db_name."`.`xref_orders_orderitems` AS `xref_orders_orderitems`,
+            `".$this->db_name."`.`entity_orderitems` AS `entity_orderitems`,
+            `".$this->db_name."`.`entity_items` AS `entity_items`
+        WHERE
+            `xref_users_orders`.`id_user` = `entity_users`.`id_user`
+                AND `xref_orders_orderitems`.`id_order` = `xref_users_orders`.`id_order`
+                AND `entity_orderitems`.`id_orderitem` = `xref_orders_orderitems`.`id_orderitem`
+                AND `entity_items`.`id_item` = `entity_orderitems`.`id_item`";
+        return $this->db->query($query)->fetch_all(MYSQLI_ASSOC); 
+    }
+    
     function addItemToOrder($id_order, $id_item, $quant, $price) {
                
         // Insert a new cart item record into the entity_cartitems table

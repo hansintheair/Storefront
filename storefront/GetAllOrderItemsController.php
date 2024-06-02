@@ -1,18 +1,17 @@
 <?php
 
-
 include "StoreDB.php";
 
 
-function getOrderHistoryJSON() {
+function getAllOrderItemsJSON() {
     $store_db = new StoreDB();
 
     $store_db->connect();
-    $data = $store_db->getAllOrders();
+    $cart_data = $store_db->getAllOrderItems();
     $store_db->disconnect();
 
-    return json_encode($data);
+    return json_encode($cart_data);
 }
 
 header("Content-Type: application/json;charset=utf8;");
-echo getOrderHistoryJSON();
+echo getAllOrderItemsJSON();

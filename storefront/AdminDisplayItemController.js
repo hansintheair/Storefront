@@ -235,8 +235,35 @@ function setAccountsListDisplay(target, id_adminuser) {
 }
 
 async function getAllOrders() {
-    console.log("IN getAllOrders");
+//    console.log("IN getAllOrders");  //DEBUG
     return await fetch(
         "DisplayOrderHistoryForAdminController.php"
     ).then(response => response.json());
+}
+
+async function getAllOrderItems() {
+    console.log("IN getAllOrders");  //DEBUG
+    return await fetch(
+        "GetAllOrderItemsController.php"
+    ).then(response => response.json());
+}
+async function setEarningsSummaryDisplay(number_orders_target, total_earnings_target) {
+    
+    let orders = await getAllOrders();
+    let num_orders = orders.length;
+    
+    number_orders_target.textContent = num_orders;
+
+    let order_items = await getAllOrderItems();
+    let total = 0;
+    order_items.forEach(
+        item => {
+            total += item["QUANT"] * item["PRICE"];
+            
+        }
+    );
+    
+    total_earnings_target.textContent = "$" + total.toFixed(2);
+    
+    
 }
