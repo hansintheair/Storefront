@@ -21,7 +21,12 @@
             <div class="sidebar"></div>
             <div class="items_list">
                 <script>
-                    setCatalogDisplay(document.querySelector(".items_list"));
+                    
+                    async function main() {
+                        await setCatalogDisplay(document.querySelector(".items_list"));
+                    };
+                    
+                    main();
                 </script>
             </div>
         </div>
