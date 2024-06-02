@@ -23,7 +23,6 @@
             <div class="sidebar">
                 <h3 id="orders-title">Orders</h3>
                 <div class="orders-history"></div>
-                <div class="order-summary"></div>
             </div>
             <div class="items_list">
             </div>

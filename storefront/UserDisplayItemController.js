@@ -169,7 +169,7 @@ async function setCartDisplay(target, data) {
             quant.setAttribute("id_cartitem", item["ID_CARTITEM"]);
             quant.onchange = function() {
                 let id_cartitem = this.getAttribute("id_cartitem");
-                console.log(this.value);
+//                console.log(this.value);
                 updateCartItemQuant(id_cartitem, this.value);
                 location.reload();
             };
@@ -230,7 +230,7 @@ function addItemToCart(id_item, quant) {
 }
 
 function remItemFromCart(id_cartitem) {
-    console.log(id_cartitem);
+//    console.log(id_cartitem);
     fetch("RemoveItemFromCartController.php", {
             method: "POST",
             headers: {
@@ -258,7 +258,7 @@ async function setOrderSummaryDisplay(target, items) {
             let quantvar = item["QUANT"];
             let pricevar = item["PRICE"];
             let subtotalvar = (quantvar * pricevar).toFixed(2);
-            console.log(subtotalvar);
+//            console.log(subtotalvar);
             total += Number(subtotalvar);
             
             // Create list item to hold item card
@@ -351,7 +351,7 @@ async function getOrderTotal() {
     return total;
 }
 
-async function setOrdersDisplay(target, items_list_target) {
+async function setOrdersDisplay(orders_history_target, order_items_target) {
     
     let active_order;
     
@@ -373,19 +373,32 @@ async function setOrdersDisplay(target, items_list_target) {
             li.setAttribute("id_order", item["ID_ORDER"]);
 
             li.onclick = async function() {
+                
                 let id_order = this.getAttribute("id_order");
+                let order_summary_target = this.querySelector(".order-summary");
+                
+                // Clear active order-summary
+//                let order_summary_active = this.parentElement.querySelector(".active .order-summary");
+//                order_summary_active.innerHTML = null;
+                
+                //
                 if (active_order) {
-                    document.querySelector(
+                    let active_order_element = document.querySelector(
                         `.order-history-item[id_order="${active_order}"]`
-                    ).classList.remove("active");
+                    );
+                    active_order_element.querySelector(".order-summary").innerHTML = null;
+                    active_order_element.classList.remove("active");
                 }
 //                console.log("CLICKED ORDER " + id_order);  //DEBUG
 //                console.log("DISPLAYED: " + displayed);  //DEBUG
 //                console.log("ORDER SUMMARY: " + order_summary);  //DEBUG
-                items_list_target.innerHTML = null;
+                order_items_target.innerHTML = null;
+                order_summary_target.innerHTML = null;
                 this.classList.add("active");
                 active_order = id_order;
-                await setOrderItemsDisplay(items_list_target, id_order);
+                let order_items_data = await getOrderItems(id_order);
+                await setOrderItemsDisplay(order_items_target, order_items_data);
+                await setOrderSummaryDisplay(order_summary_target, order_items_data);
             };
 
             if (i === 0) {
@@ -393,9 +406,10 @@ async function setOrdersDisplay(target, items_list_target) {
                 active_order = id_order;
                 li.classList.add("active");
                 async function init_state() {
+                    let order_items_data = await getOrderItems(id_order);
                     await setOrderItemsDisplay(
-                        items_list_target,
-                        id_order);
+                        order_items_target,
+                        order_items_data);
                 }
                 init_state();
             }
@@ -408,12 +422,17 @@ async function setOrdersDisplay(target, items_list_target) {
             order_date.className = "order-date";
             let date = item["ORDER_DATE"];
             order_date.textContent = date;
-
+                   
             // Compose the item info from its parts
             div.appendChild(order_date);
 
+            // Create order summary container
+            const order_summary = document.createElement("div");
+            order_summary.className = "order-summary";
+            
             // Compose the list of items
             li.appendChild(div);
+            li.appendChild(order_summary);
             ul.appendChild(li);
             if (i < data.length-1) {
                 const divider = document.createElement("li");
@@ -423,7 +442,7 @@ async function setOrdersDisplay(target, items_list_target) {
             i+=1;
         }
     );
-    target.appendChild(ul);
+    orders_history_target.appendChild(ul);
 }
 
 async function getOrderItems(id_order) {
@@ -438,13 +457,11 @@ async function getOrderItems(id_order) {
         }
     ).then(response => response.json());
 }
-async function setOrderItemsDisplay(target, id_order) {
+async function setOrderItemsDisplay(target, data) {
     
 //    console.log("IN setOrderHistoryItemsDisplay");  //DEBUG
 //    console.log("id_order = " + id_order);  //DEBUG
 //    console.log(target);  //DEBUG
-    
-    let data = await getOrderItems(id_order);
     
     const ul = document.createElement("ul");
     ul.className = "order-history-items-list";
