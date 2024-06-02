@@ -361,7 +361,7 @@ async function setOrdersDisplay(target, items_list_target) {
                         items_list_target.innerHTML = null;
                         this.classList.add("active");
                         active_order = id_order;
-                        await setOrderHistoryItemsDisplay(items_list_target, id_order);
+                        await setOrderItemsDisplay(items_list_target, id_order);
                     };
                     
                     if (i === 0) {
@@ -369,7 +369,7 @@ async function setOrdersDisplay(target, items_list_target) {
                         active_order = id_order;
                         li.classList.add("active");
                         async function init_state() {
-                            await setOrderHistoryItemsDisplay(
+                            await setOrderItemsDisplay(
                                 items_list_target,
                                 id_order);
                         }
@@ -417,7 +417,7 @@ async function getOrderItems(id_order) {
         }
     ).then(response => response.json());
 }
-async function setOrderHistoryItemsDisplay(target, id_order) {
+async function setOrderItemsDisplay(target, id_order) {
     
 //    console.log("IN setOrderHistoryItemsDisplay");  //DEBUG
 //    console.log("id_order = " + id_order);  //DEBUG
