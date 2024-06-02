@@ -19,16 +19,12 @@
         
         <div class="items-pane">
             <div class="sidebar">
-                <h3 id="earnings-summary">Cart Summary</h3>
                 
-                <div>
-                    <form action="PlaceOrderController.php" method="post">
-                        <p><span><b>Order total</b></span><br><span>$</span><span id="order-total"></span></p>
-                        <button type="submit">Place order</button>
-                        <span class="error" id="error"><?php echo isset($_SESSION['is_empty']) ? $_SESSION['is_empty'] : "";?></span>
-                    </form>
-                    
-                </div>
+                <h3>Earnings Summary</h3>
+                <div class="earnings-summary"></div>
+                <h3>Orders History</h3>
+                <div class="orders-history"></div>
+                
             </div>
             
             <div class="items_list"></div>
@@ -38,19 +34,9 @@
     
     <script>
         async function main() {
-            await setCartDisplay(document.querySelector(".items_list"));
-            await setOrderSummaryDisplay(
-                document.querySelector(".order-summary"),
-                document.querySelectorAll(".cart_list li")
-            );
-            let total = await getOrderTotal();
         }
         main();
-        errorMessageTimeout();
     </script>
     
-    <?php
-        unset($_SESSION['is_empty']);
-    ?>
     
 </html>
