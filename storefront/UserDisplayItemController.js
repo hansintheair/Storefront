@@ -339,10 +339,6 @@ async function setOrdersDisplay(target, items_list_target) {
             let i = 0;
             data.forEach(item => {
                 
-                    // Create div for order summary
-                    const order_summary = document.createElement("div");
-                    order_summary.className = "order-summary";
-
                     // Create list item to hold item card
                     const li = document.createElement("li");
                     li.className = "order-history-item";
@@ -351,7 +347,9 @@ async function setOrdersDisplay(target, items_list_target) {
                     li.onclick = async function() {
                         let id_order = this.getAttribute("id_order");
                         if (active_order) {
-                            document.querySelector(`.order-history-item[id_order="${active_order}"]`).classList.remove("active");
+                            document.querySelector(
+                                `.order-history-item[id_order="${active_order}"]`
+                            ).classList.remove("active");
                         }
 //                        console.log("CLICKED ORDER " + id_order);  //DEBUG
 //                        console.log("DISPLAYED: " + displayed);  //DEBUG
@@ -359,7 +357,7 @@ async function setOrdersDisplay(target, items_list_target) {
                         items_list_target.innerHTML = null;
                         this.classList.add("active");
                         active_order = id_order;
-                        await displayOrder(items_list_target, order_summary, id_order);
+                        await displayOrder(items_list_target, id_order);
                     };
                     
                     if (i === 0) {
@@ -369,7 +367,6 @@ async function setOrdersDisplay(target, items_list_target) {
                         async function init_state() {
                             await displayOrder(
                                 items_list_target,
-                                order_summary,
                                 id_order);
                         }
                         init_state();
@@ -390,7 +387,6 @@ async function setOrdersDisplay(target, items_list_target) {
                     // Compose the list of items
                     li.appendChild(div);
                     ul.appendChild(li);
-                    ul.appendChild(order_summary);
                     if (i < data.length-1) {
                         const divider = document.createElement("li");
                         divider.className = "divider";
@@ -475,12 +471,7 @@ async function setOrderHistoryItemsDisplay(target, id_order) {
     );
 }
 
-async function displayOrder(items_list_target, order_summary_target, id_order) {
+async function displayOrder(items_list_target, id_order) {
     await setOrderHistoryItemsDisplay(items_list_target, id_order);
-    //THIS DIDN'T WORK =/
-    //SOMETHING TO DO WITH TIMING, MAYBE FIGURE IT OUT LATER, BUT SPENT TOO MUCH TIME ALREADY
-//    await setOrderSummaryDisplay(
-//        order_summary_target,
-//        items_list_target.querySelectorAll(".order-history-items-list li")
-//    );
+    
 }
