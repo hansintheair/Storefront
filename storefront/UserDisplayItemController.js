@@ -339,13 +339,15 @@ async function setOrdersDisplay(target, items_list_target) {
             ul.className = "orders-history-list";
             
             let i = 0;
-            data.forEach(item => {
+            data.forEach(
+                item => {
                 
                     // Create list item to hold item card
                     const li = document.createElement("li");
                     li.className = "order-history-item";
 //                    li.id = `item-id-${item["ID_ORDER"]}`;
                     li.setAttribute("id_order", item["ID_ORDER"]);
+                    
                     li.onclick = async function() {
                         let id_order = this.getAttribute("id_order");
                         if (active_order) {
@@ -403,13 +405,8 @@ async function setOrdersDisplay(target, items_list_target) {
     );
 }
 
-async function setOrderHistoryItemsDisplay(target, id_order) {
-    
-//    console.log("IN setOrderHistoryItemsDisplay");  //DEBUG
-//    console.log("id_order = " + id_order);  //DEBUG
-//    console.log(target);  //DEBUG
-    
-    fetch(
+async function getOrderItems(id_order) {
+    return await fetch(
         "DisplayOrderHistoryItemsController.php",
         {
             method: "POST",
@@ -418,58 +415,61 @@ async function setOrderHistoryItemsDisplay(target, id_order) {
             },
             body: `id_order=${encodeURIComponent(id_order)}`
         }
-    )
-        .then(response => response.json()
-        .then(data => {
-            const ul = document.createElement("ul");
-            ul.className = "order-history-items-list";
-            
-            data.forEach(item => {
-                
-//                    console.log(item);
-                
-                    // Create list item to hold item card
-                    const li = document.createElement("li");
-                    li.className = "catalog_item";
+    ).then(response => response.json());
+}
+async function setOrderHistoryItemsDisplay(target, id_order) {
+    
+//    console.log("IN setOrderHistoryItemsDisplay");  //DEBUG
+//    console.log("id_order = " + id_order);  //DEBUG
+//    console.log(target);  //DEBUG
+    
+    let data = await getOrderItems(id_order);
+    
+    const ul = document.createElement("ul");
+    ul.className = "order-history-items-list";
 
-                    // Create & fill base item div contents
-                    const div = createItemBaseContents(item, false);
-                    
-                    // Quantity selection
-                        
-                    const quant_select = document.createElement("div");
-                    quant_select.id = "quant_select";
+    data.forEach(
+        item => {
 
-                    const quant_label = document.createElement("span");
-                    quant_label.id = "quant_label";
-                    quant_label.textContent = "Quantity:";
+            // Create list item to hold item card
+            const li = document.createElement("li");
+            li.className = "catalog_item";
 
-                    const quant = document.createElement("select");
-                    quant.id = "item_quant";
-                    quant.disabled = true;
-                    for (let i = 1; i <= 25; i++) {
-                        const option = document.createElement("option");
-                        option.value = i;
-                        option.text = i;
-                        quant.add(option);
-                    }
-                    quant.value = item["QUANT"];
-                        
-                    quant_select.appendChild(quant_label);
-                    quant_select.appendChild(quant);
+            // Create & fill base item div contents
+            const div = createItemBaseContents(item, false);
 
+            // Quantity selection
 
-                    // Compose the item info from its parts
-                    div.appendChild(quant_select);
+            const quant_select = document.createElement("div");
+            quant_select.id = "quant_select";
 
-                    // Compose the list of items
-                    li.appendChild(div);
-                    ul.appendChild(li);
-                }
-            );
-            target.appendChild(ul);
+            const quant_label = document.createElement("span");
+            quant_label.id = "quant_label";
+            quant_label.textContent = "Quantity:";
+
+            const quant = document.createElement("select");
+            quant.id = "item_quant";
+            quant.disabled = true;
+            for (let i = 1; i <= 25; i++) {
+                const option = document.createElement("option");
+                option.value = i;
+                option.text = i;
+                quant.add(option);
             }
-        )
+            quant.value = item["QUANT"];
+
+            quant_select.appendChild(quant_label);
+            quant_select.appendChild(quant);
+
+
+            // Compose the item info from its parts
+            div.appendChild(quant_select);
+
+            // Compose the list of items
+            li.appendChild(div);
+            ul.appendChild(li);
+        }
     );
+    target.appendChild(ul);
 }
 
