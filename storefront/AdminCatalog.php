@@ -41,7 +41,7 @@
             </div>
             <div class="items_list">
                 <script>
-                    
+                    console.log(generateRandomPassword());
                     setActive("catalog-tab");
                     
                     async function main() {

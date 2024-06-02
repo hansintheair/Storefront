@@ -41,7 +41,7 @@
                 </div>   
             </div>
             <div class="items_list">
-                <script>
+                <script>                    
                     
                     setActive("accounts-tab");
                     
@@ -63,6 +63,7 @@
     <?php
         unset($_SESSION["register_error"]);
         unset($_SESSION["register_success"]);
+        unset($_SESSION["password_update_success"]);
     ?>
     
 </html>

@@ -201,7 +201,7 @@ async function setAccountsListDisplay(target, id_adminuser) {
                         // Form for resetting password
                         const form_reset = document.createElement("form");
                         form_reset.id = "form-reset-passw";
-                        form_reset.action = "";
+                        form_reset.action = "ResetPasswordController.php";
                         form_reset.method = "POST";
                         
                         const id_user_reset = document.createElement("input");
@@ -209,20 +209,29 @@ async function setAccountsListDisplay(target, id_adminuser) {
                         id_user_reset.name = "id_user";
                         id_user_reset.value = item["ID_USER"];
                         
+                        const res_password = document.createElement("input");
+                        res_password.type = "hidden";
+                        res_password.name = "res_password";
+                        res_password.value = generateRandomPassword();
+                        
                         const reset = document.createElement("button");
                         reset.type = "submit";
                         reset.textContent = "Reset Password";
                         if (id_adminuser === Number(item["ID_USER"])) {
                             reset.disabled = true;
                         }
+                        reset.onclick =  function () {
+                          alert(`Pretend that a password reset e-mail sent\nnew password:\n\n${res_password.value}\n\n--WARNING!!! NOTE DOWN THE PASSWORD\n--no e-mail was actually sent--`);
+                        };
                         
                         form_reset.appendChild(id_user_reset);
+                        form_reset.appendChild(res_password);
                         form_reset.appendChild(reset);
                         
                         // Compose the item card from its parts
                         div.appendChild(form_update);
                         div.appendChild(form_delete);
-                        div.appendChild(form_reset)
+                        div.appendChild(form_reset);
                         
                         // Compose the list of items
 
@@ -268,4 +277,17 @@ async function setEarningsSummaryDisplay(number_orders_target, total_earnings_ta
     total_earnings_target.textContent = "$" + total.toFixed(2);
     
     
+}
+
+function generateRandomPassword() {
+    const chars = ['ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz', '0123456789', '!@#$%^&*'];
+    let password = '';
+
+    while (password.length < 8) {
+        for (let i = 0; i < chars.length; i++) {  // Pick one of each required chars
+            password += chars[i][Math.floor(Math.random() * chars[i].length)];
+        }
+    }
+    
+    return password;
 }
