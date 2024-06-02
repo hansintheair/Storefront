@@ -23,6 +23,7 @@
             <div class="sidebar">
                 <h3 id="orders-title">Orders</h3>
                 <div class="orders-history"></div>
+                <div class="order-summary"></div>
             </div>
             <div class="items_list">
             </div>
@@ -37,6 +38,11 @@
                     document.querySelector(".orders-history"),
                     document.querySelector(".items_list"),
                 );
+//                await setOrderSummaryDisplay(
+//                    document.querySelector(".orders-summary"),
+//                    document.querySelectorAll(".order-history-items-list li")
+//                );
+                // I CAN'T FIGURE THIS OUT, TRIED FOR 4 HOURS IN DIFFERENT WAYS, BUT CANNOT GET ELEMENT
             }
             
             main();
