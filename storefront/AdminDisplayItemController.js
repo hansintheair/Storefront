@@ -195,7 +195,6 @@ function setAccountsListDisplay(target, id_adminuser) {
                             del.disabled = true;
                         }
                         
-                        
                         form_delete.appendChild(id_item_del);
                         form_delete.appendChild(del);
                         
@@ -213,6 +212,9 @@ function setAccountsListDisplay(target, id_adminuser) {
                         const reset = document.createElement("button");
                         reset.type = "submit";
                         reset.textContent = "Reset Password";
+                        if (id_adminuser === Number(item["ID_USER"])) {
+                            reset.disabled = true;
+                        }
                         
                         form_reset.appendChild(id_user_reset);
                         form_reset.appendChild(reset);
