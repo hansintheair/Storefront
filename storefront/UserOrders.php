@@ -31,18 +31,11 @@
         
         <script>
             
-//            import {active_order} from "UserDisplayItemController.js";
-            
             async function main() {
                 await setOrdersDisplay(
                     document.querySelector(".orders-history"),
                     document.querySelector(".items_list"),
                 );
-//                await setOrderSummaryDisplay(
-//                    document.querySelector(".orders-summary"),
-//                    document.querySelectorAll(".order-history-items-list li")
-//                );
-                // I CAN'T FIGURE THIS OUT, TRIED FOR 4 HOURS IN DIFFERENT WAYS, BUT CANNOT GET ELEMENT
             }
             
             main();
