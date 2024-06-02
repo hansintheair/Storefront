@@ -412,7 +412,8 @@ class StoreDB {
         $query = "
         SELECT 
             `entity_orders`.`id_order` AS `ID_ORDER`,
-            `entity_orders`.`order_date` AS `ORDER_DATE`
+            `entity_orders`.`order_date` AS `ORDER_DATE`,
+            `xref_users_orders`.`id_user` AS `ID_USER`
         FROM
             `".$this->db_name."`.`xref_users_orders` AS `xref_users_orders`,
             `".$this->db_name."`.`entity_users` AS `entity_users`,
@@ -424,7 +425,23 @@ class StoreDB {
         return $this->db->query($query)->fetch_all(MYSQLI_ASSOC);
 }
 
-    function getOrderItems($id_user, $id_order) {
+function getAllOrders() {
+        $query = "
+        SELECT 
+            `entity_orders`.`id_order` AS `ID_ORDER`,
+            `entity_orders`.`order_date` AS `ORDER_DATE`,
+            `xref_users_orders`.`id_user` AS `ID_USER`
+        FROM
+            `".$this->db_name."`.`xref_users_orders` AS `xref_users_orders`,
+            `".$this->db_name."`.`entity_users` AS `entity_users`,
+            `".$this->db_name."`.`entity_orders` AS `entity_orders`
+        WHERE
+            `xref_users_orders`.`id_user` = `entity_users`.`id_user`
+            AND `entity_orders`.`id_order` = `xref_users_orders`.`id_order`";
+        return $this->db->query($query)->fetch_all(MYSQLI_ASSOC);
+}
+
+    function getOrderItems($id_order) {
         $query = "
         SELECT 
             `xref_orders_orderitems`.`id_orderitem` AS `ID_ORDERITEM`,
@@ -440,8 +457,7 @@ class StoreDB {
             `".$this->db_name."`.`entity_orderitems` AS `entity_orderitems`,
             `".$this->db_name."`.`entity_items` AS `entity_items`
         WHERE
-            `entity_users`.`id_user` = '".$id_user."'
-                AND `xref_orders_orderitems`.`id_order` =  '".$id_order."'
+            `xref_orders_orderitems`.`id_order` =  '".$id_order."'
                 AND `xref_users_orders`.`id_user` = `entity_users`.`id_user`
                 AND `xref_orders_orderitems`.`id_order` = `xref_users_orders`.`id_order`
                 AND `entity_orderitems`.`id_orderitem` = `xref_orders_orderitems`.`id_orderitem`

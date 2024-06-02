@@ -9,8 +9,11 @@
         <title>User Profile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <script type="text/javascript" src="UserDisplayItemController.js"></script>
+        <script type="text/javascript" src="AdminDisplayItemController.js"></script>
         <link rel="stylesheet" href="styles/navbar.css">
         <link rel="stylesheet" href="styles/sidebar.css">
+        <link rel="stylesheet" href="styles/catalog.css">
+        <link rel="stylesheet" href="styles/orders_history.css">
     </head>
     
     <body>
@@ -33,9 +36,17 @@
     </body>
     
     <script>
+        
         async function main() {
+            await setOrdersDisplay(
+                document.querySelector(".orders-history"),
+                document.querySelector(".items_list"),
+                await getAllOrders()
+            );
         }
+            
         main();
+            
     </script>
     
     

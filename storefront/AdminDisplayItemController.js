@@ -233,3 +233,10 @@ function setAccountsListDisplay(target, id_adminuser) {
         )
     );
 }
+
+async function getAllOrders() {
+    console.log("IN getAllOrders");
+    return await fetch(
+        "DisplayOrderHistoryForAdminController.php"
+    ).then(response => response.json());
+}
