@@ -389,6 +389,14 @@ async function setOrdersDisplay(orders_history_target, order_items_target, data,
                 //                console.log("ORDER SUMMARY: " + order_summary);  //DEBUG
                 order_items_target.innerHTML = null;  // Clear out target before writing to it
                 order_summary_target.innerHTML = null;  // Clear out target before writing to it
+                
+                if (show_details) {  // Show user email
+                    let email = document.createElement("p");
+                    email.class = "email";
+                    email.textContent = item["EMAIL"];
+                    order_summary.appendChild(email);
+                }
+                
                 this.classList.add("active");
                 let order_items_data = await getOrderItems(id_order);
                 await setOrderItemsDisplay(order_items_target, order_items_data);
@@ -404,7 +412,6 @@ async function setOrdersDisplay(orders_history_target, order_items_target, data,
             order_date.textContent = item["ORDER_DATE"];
 
             div.appendChild(order_date);
-
             if (show_details) {
                 const order_id = document.createElement("span");
                 order_id.className = "order-id";
@@ -417,6 +424,14 @@ async function setOrdersDisplay(orders_history_target, order_items_target, data,
             order_summary.className = "order-summary";
 
             if (i === 0) {
+                
+                if (show_details) {  // Show user email
+                    let email = document.createElement("p");
+                    email.class = "email";
+                    email.textContent = item["EMAIL"];
+                    order_summary.appendChild(email);
+                }
+                                
                 let id_order = li.getAttribute("id_order");
                 li.classList.add("active");
                 async function init_state() {

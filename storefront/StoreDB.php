@@ -413,7 +413,8 @@ class StoreDB {
         SELECT 
             `entity_orders`.`id_order` AS `ID_ORDER`,
             `entity_orders`.`order_date` AS `ORDER_DATE`,
-            `xref_users_orders`.`id_user` AS `ID_USER`
+            `xref_users_orders`.`id_user` AS `ID_USER`,
+            `entity_users`.`email` AS `EMAIL`
         FROM
             `".$this->db_name."`.`xref_users_orders` AS `xref_users_orders`,
             `".$this->db_name."`.`entity_users` AS `entity_users`,
@@ -430,7 +431,9 @@ function getAllOrders() {
         SELECT 
             `entity_orders`.`id_order` AS `ID_ORDER`,
             `entity_orders`.`order_date` AS `ORDER_DATE`,
-            `xref_users_orders`.`id_user` AS `ID_USER`
+            `xref_users_orders`.`id_user` AS `ID_USER`,
+            `entity_users`.`email` AS `EMAIL`
+
         FROM
             `".$this->db_name."`.`xref_users_orders` AS `xref_users_orders`,
             `".$this->db_name."`.`entity_users` AS `entity_users`,
