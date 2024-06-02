@@ -351,12 +351,14 @@ async function getOrderTotal() {
     return total;
 }
 
-async function setOrdersDisplay(orders_history_target, order_items_target) {
-    
-    let data = await fetch(
+async function getOrders() {
+    return await fetch(
         "DisplayOrderHistoryController.php"
     ).then(response => response.json());
-        
+}
+
+async function setOrdersDisplay(orders_history_target, order_items_target, data) {
+    
     const ul = document.createElement("ul");
     ul.className = "orders-history-list";
 
@@ -374,10 +376,6 @@ async function setOrdersDisplay(orders_history_target, order_items_target) {
                 
                 let id_order = this.getAttribute("id_order");
                 let order_summary_target = this.querySelector(".order-summary");
-                
-                // Clear active order-summary
-//                let order_summary_active = this.parentElement.querySelector(".active .order-summary");
-//                order_summary_active.innerHTML = null;
                 
                 // Clear active order
                 let active_order_element = document.querySelector(
