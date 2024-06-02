@@ -56,6 +56,7 @@
         main();
         
         errorMessageTimeout();
+        
     </script>
     
     <?php
