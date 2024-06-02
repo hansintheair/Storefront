@@ -387,8 +387,8 @@ async function setOrdersDisplay(orders_history_target, order_items_target, data)
 //                console.log("CLICKED ORDER " + id_order);  //DEBUG
 //                console.log("DISPLAYED: " + displayed);  //DEBUG
 //                console.log("ORDER SUMMARY: " + order_summary);  //DEBUG
-                order_items_target.innerHTML = null;
-                order_summary_target.innerHTML = null;
+                order_items_target.innerHTML = null;  // Clear out target before writing to it
+                order_summary_target.innerHTML = null;  // Clear out target before writing to it
                 this.classList.add("active");
                 let order_items_data = await getOrderItems(id_order);
                 await setOrderItemsDisplay(order_items_target, order_items_data);
