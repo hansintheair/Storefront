@@ -353,8 +353,6 @@ async function getOrderTotal() {
 
 async function setOrdersDisplay(orders_history_target, order_items_target) {
     
-    let active_order;
-    
     let data = await fetch(
         "DisplayOrderHistoryController.php"
     ).then(response => response.json());
@@ -381,38 +379,23 @@ async function setOrdersDisplay(orders_history_target, order_items_target) {
 //                let order_summary_active = this.parentElement.querySelector(".active .order-summary");
 //                order_summary_active.innerHTML = null;
                 
-                //
-                if (active_order) {
-                    let active_order_element = document.querySelector(
-                        `.order-history-item[id_order="${active_order}"]`
-                    );
-                    active_order_element.querySelector(".order-summary").innerHTML = null;
-                    active_order_element.classList.remove("active");
-                }
+                // Clear active order
+                let active_order_element = document.querySelector(
+                    ".order-history-item.active"
+                );
+                active_order_element.querySelector(".order-summary").innerHTML = null;
+                active_order_element.classList.remove("active");
+                
 //                console.log("CLICKED ORDER " + id_order);  //DEBUG
 //                console.log("DISPLAYED: " + displayed);  //DEBUG
 //                console.log("ORDER SUMMARY: " + order_summary);  //DEBUG
                 order_items_target.innerHTML = null;
                 order_summary_target.innerHTML = null;
                 this.classList.add("active");
-                active_order = id_order;
                 let order_items_data = await getOrderItems(id_order);
                 await setOrderItemsDisplay(order_items_target, order_items_data);
                 await setOrderSummaryDisplay(order_summary_target, order_items_data);
             };
-
-            if (i === 0) {
-                let id_order = li.getAttribute("id_order");
-                active_order = id_order;
-                li.classList.add("active");
-                async function init_state() {
-                    let order_items_data = await getOrderItems(id_order);
-                    await setOrderItemsDisplay(
-                        order_items_target,
-                        order_items_data);
-                }
-                init_state();
-            }
 
             // Create base item div
             const div = document.createElement("div");
@@ -429,6 +412,17 @@ async function setOrdersDisplay(orders_history_target, order_items_target) {
             // Create order summary container
             const order_summary = document.createElement("div");
             order_summary.className = "order-summary";
+            
+            if (i === 0) {
+                let id_order = li.getAttribute("id_order");
+                li.classList.add("active");
+                async function init_state() {
+                    let order_items_data = await getOrderItems(id_order);
+                    await setOrderItemsDisplay(order_items_target, order_items_data);
+                    await setOrderSummaryDisplay(order_summary, order_items_data);
+                }
+                init_state();
+            }
             
             // Compose the list of items
             li.appendChild(div);
