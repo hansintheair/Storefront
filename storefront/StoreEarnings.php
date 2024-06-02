@@ -44,7 +44,6 @@
                 document.querySelectorAll(".cart_list li")
             );
             let total = await getOrderTotal();
-            document.getElementById("order-total").textContent = total.toFixed(2);
         }
         main();
         errorMessageTimeout();

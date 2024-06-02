@@ -246,20 +246,20 @@ async function setOrderSummaryDisplay(target, items) {
     const ul = document.createElement("ul");
     ul.className = "order-summary-list";
     
-    console.log("IN setOrderHistoryItemsDisplay");  //DEBUG
-    console.log("ITEMS = " + items);  //DEBUG
-    console.log("TARGET = " + target);  //DEBUG
+//    console.log("IN setOrderHistoryItemsDisplay");  //DEBUG
+//    console.log("ITEMS = " + items);  //DEBUG
+//    console.log("TARGET = " + target);  //DEBUG
+    
+    let total = 0;
     
     items.forEach(
         item => {
         
-            console.log(item);
-        
-//            let quantvar = item.querySelector("#item_quant").value;
             let quantvar = item["QUANT"];
-//            let pricevar = item.querySelector("#item_price").value;
             let pricevar = item["PRICE"];
-            let subtovar = (quantvar * pricevar).toFixed(2);
+            let subtotalvar = (quantvar * pricevar).toFixed(2);
+            console.log(subtotalvar);
+            total += Number(subtotalvar);
             
             // Create list item to hold item card
             const li = document.createElement("li");
@@ -300,7 +300,7 @@ async function setOrderSummaryDisplay(target, items) {
             
             const subtotal = document.createElement("div");
             subtotal.id = "order-item-subtotal";
-            subtotal.textContent = "$" + subtovar;
+            subtotal.textContent = "$" + subtotalvar;
             
             subtotal_container.appendChild(subtotal);
             
@@ -314,7 +314,28 @@ async function setOrderSummaryDisplay(target, items) {
             ul.appendChild(li);            
         }
     );
+    
+    // Order total
+    const order_total_container = document.createElement("p");
+    
+    const order_total_label = document.createElement("span");
+    const b = document.createElement("b");
+    b.textContent = "Order Total";
+    const br = document.createElement("br");
+    order_total_label.appendChild(b);
+    order_total_label.appendChild(br);
+    
+    const order_total_value = document.createElement("span");
+    order_total_value.id = "order-total";
+    order_total_value.textContent = "$" + total.toFixed(2);
+    
+    order_total_container.appendChild(order_total_label);
+    order_total_container.appendChild(order_total_value);
+    
+    // Compose the order summary    
     target.appendChild(ul);
+    target.appendChild(order_total_container);
+    
 }
 
 async function getOrderTotal() {

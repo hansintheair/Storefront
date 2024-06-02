@@ -27,7 +27,6 @@
                 <div class="order-summary"></div>
                 <div>
                     <form action="PlaceOrderController.php" method="post">
-                        <p><span><b>Order total</b></span><br><span>$</span><span id="order-total"></span></p>
                         <button type="submit">Place order</button>
                         <span class="error" id="error"><?php echo isset($_SESSION['is_empty']) ? $_SESSION['is_empty'] : "";?></span>
                     </form>
@@ -50,7 +49,6 @@
                 cart_items
             );
             let total = await getOrderTotal();
-            document.getElementById("order-total").textContent = total.toFixed(2);
         }
         
         main();
