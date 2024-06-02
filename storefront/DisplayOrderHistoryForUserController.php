@@ -13,7 +13,7 @@ function getOrderHistoryJSON($id_user) {
     $store_db = new StoreDB();
 
     $store_db->connect();
-    $cart_data = $store_db->getOrders($id_user);
+    $cart_data = $store_db->getUserOrders($id_user);
     $store_db->disconnect();
 
     return json_encode($cart_data);

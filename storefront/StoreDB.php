@@ -408,7 +408,7 @@ class StoreDB {
         $this->db->query($query);
     }
     
-    function getOrders($id_user) {
+    function getUserOrders($id_user) {
         $query = "
         SELECT 
             `entity_orders`.`id_order` AS `ID_ORDER`,
