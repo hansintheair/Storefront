@@ -5,6 +5,7 @@ body {
 
 .items-pane {
     display: flex;
+    flex-direction: row;
 }
 
 .items_list li {
@@ -16,6 +17,17 @@ body {
     padding: 10px;
     background-color: #f4f3f0;
     border-radius: 8px;
+}
+
+.account_item {
+    background-color: #f4f3f0;
+    border-radius: 8px;
+    padding: 15px;
+    max-width: available;
+}
+
+.items_list {
+    flex-grow: 1;
 }
 
 form input,
@@ -32,7 +44,7 @@ form textarea {
 
 .accounts_list{
     display: grid;
-    grid-template-columns: repeat(5, auto);
+    grid-template-columns: repeat(auto-fill, minmax(230px, 0fr));
     gap: 20px;
     padding: 10px;
 }
