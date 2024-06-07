@@ -30,6 +30,7 @@
                     <form action="PlaceOrderController.php" method="post">
                         <button type="submit">Place order</button>
                         <span class="error" id="error"><?php echo isset($_SESSION['is_empty']) ? $_SESSION['is_empty'] : "";?></span>
+                        <span class="success"><?php echo isset($_SESSION["order_placed"]) ? "Order placed" : "";?></span>
                     </form>
                     
                 </div>
@@ -51,17 +52,18 @@
                 document.querySelector(".order-summary"),
                 cart_items
             );
-            let total = await getOrderTotal();
         }
         
         main();
         
-        errorMessageTimeout();
+        successMessageTimeout();
+        errorMessageTimeout();        
         
     </script>
     
     <?php
-        unset($_SESSION['is_empty']);
+        unset($_SESSION["is_empty"]);
+        unset($_SESSION["order_placed"]);
     ?>
     
 </html>

@@ -311,6 +311,28 @@ class StoreDB {
         return $this->db->query($query)->fetch_all(MYSQLI_ASSOC);
     }
     
+    function isCartEmpty($id_user) {
+        $query = "
+        SELECT 
+            *
+        FROM
+            `".$this->db_name."`.`xref_users_cartitems` AS `xref_users_cartitems`,
+            `".$this->db_name."`.`entity_users` AS `entity_users`,
+            `".$this->db_name."`.`entity_cartitems` AS `entity_cartitems`,
+            `".$this->db_name."`.`entity_items` AS `entity_items`,
+            `".$this->db_name."`.`entity_catalogitems` AS `entity_catalogitems`
+        WHERE
+            `entity_users`.`id_user` = '".$id_user."'
+                AND `xref_users_cartitems`.`id_user` = `entity_users`.`id_user`
+                AND `entity_cartitems`.`id_cartitem` = `xref_users_cartitems`.`id_cartitem`
+                AND `entity_items`.`id_item` = `entity_cartitems`.`id_item`
+                AND `entity_catalogitems`.`id_catalogitem` = `entity_items`.`id_catalogitem`";
+//        error_log("IN isCartEmpy");  //DEBUG
+//        error_log(json_encode($this->db->query($query)->fetch_assoc()));  //DEBUG
+//        error_log((bool)$this->db->query($query)->fetch_assoc());  //DEBUG
+        return $this->db->query($query)->fetch_assoc() == null;
+    }
+    
     function getItemInCart($id_user, $id_item) {
         $query = "
         SELECT 
