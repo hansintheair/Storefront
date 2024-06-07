@@ -245,10 +245,10 @@ class StoreDB {
     function addItemToCatalog($name, $desc, $price, $quant) {
         
         // Check if item by that name is already in the catalog
-//        if ($this->checkItemInCatalog($name)) {
-////            error_log("THAT ITEM ALREADY EXISTS");  //DEBUG
-//            return;
-//        }
+        if ($this->checkItemInCatalog($name)) {
+//            error_log("THAT ITEM ALREADY EXISTS");  //DEBUG
+            return;
+        }
         
         // Insert a new item record into the entity_items table
         $query = "
@@ -271,6 +271,17 @@ class StoreDB {
         VALUES
             ('".$id_item."', '".$price."', '".$quant."')";
         $this->db->query($query);
+    }
+    
+        function checkItemInCatalog($name) {
+        $query = "
+        SELECT 
+            `name`
+        FROM
+            `".$this->db_name."`.`entity_items` AS `entity_items`
+        WHERE
+                `entity_items`.`name` = '".$name."'";
+        return (bool)$this->db->query($query)->fetch_assoc();
     }
     
     function getCart($id_user) {

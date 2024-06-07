@@ -22,10 +22,19 @@ function addCatalogItem($name, $desc, $price, $quant) {
     $store_db = new StoreDB();
 
     $store_db->connect();
+    
+    if ($store_db->checkItemInCatalog($name)) {
+        $_SESSION["catalog_add_error"] = "Item already exists";
+        header("Location: AdminCatalog.php");
+       exit;
+    }
+    
     $store_db->addItemToCatalog($name, $desc, $price, $quant);
     $store_db->disconnect();
 }
 
 addCatalogItem($name, $desc, $price, $quant);
 
+$_SESSION["catalog_add_success"] = true;
+unset($_SESSION["catalog_add_error"]);
 header("Location: AdminCatalog.php");

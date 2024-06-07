@@ -12,8 +12,10 @@
         <link rel="stylesheet" href="styles/navbar.css">
         <link rel="stylesheet" href="styles/sidebar.css">
         <link rel="stylesheet" href="styles/admin_catalog.css">
+        <link rel="stylesheet" href="styles/messages.css">
         <script type="text/javascript" src="AdminDisplayItemController.js"></script>
         <script type="text/javascript" src="navbarTabManager.js"></script>
+        <script type="text/javascript" src="messages.js"></script>
     </head>
     
     <body>
@@ -34,8 +36,8 @@
                         <label for="item_quant">Quantity:</label>
                         <input name="item_quant" type="number" required step="1" min="0">
                         <button type="submit">Add Item</button>
-                        <span class="error"><?php echo isset($_SESSION["password_update_error"]) ? $_SESSION["password_update_error"] : "";?></span>
-                        <span class="success"><?php echo isset($_SESSION["password_update_success"]) ? "Successfully registered" : "";?></span>
+                        <span class="error"><?php echo isset($_SESSION["catalog_add_error"]) ? $_SESSION["catalog_add_error"] : "";?></span>
+                        <span class="success"><?php echo isset($_SESSION["catalog_add_success"]) ? "Successfully added" : "";?></span>
                     </form>
                 </div>   
             </div>
@@ -49,11 +51,19 @@
                     }
                     
                     main();
+                    
+                    successMessageTimeout();
+                    errorMessageTimeout();
                 
                 </script>
             </div>
         </div>
         
     </body>
+    
+    <?php
+        unset($_SESSION['catalog_add_error']);
+        unset($_SESSION['catalog_add_success']);
+    ?>
     
 </html>
