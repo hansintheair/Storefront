@@ -168,6 +168,12 @@ async function setCartDisplay(target, data) {
                 quant.add(option);
             }
             quant.value = item["QUANT"];
+            
+            // Mark quantity title red when quantity exceeds stock
+            if (item["QUANT"] > item["STOCK"]) {
+                quant_label.classList.add("error-nofade");
+            }
+            
             quant.setAttribute("id_cartitem", item["ID_CARTITEM"]);
             quant.onchange = function () {
                 let id_cartitem = this.getAttribute("id_cartitem");
