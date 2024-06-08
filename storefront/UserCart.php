@@ -28,9 +28,10 @@
                 <div class="order-summary"></div>
                 <div>
                     <form action="PlaceOrderController.php" method="post">
-                        <button type="submit">Place order</button>
+                        <button id="place-order" type="submit">Place order</button>
                         <span class="error" id="error"><?php echo isset($_SESSION['is_empty']) ? $_SESSION['is_empty'] : "";?></span>
                         <span class="success"><?php echo isset($_SESSION["order_placed"]) ? "Order placed" : "";?></span>
+                        <span class="error-nofade" id="error-checkorder"></span>
                     </form>
                     
                 </div>
@@ -50,6 +51,11 @@
             await setCartDisplay(document.querySelector(".items_list"), cart_items);
             await setOrderSummaryDisplay(
                 document.querySelector(".order-summary"),
+                cart_items
+            );
+            await checkOrder(
+                document.querySelector("#place-order"),
+                document.querySelector("#error-checkorder"),
                 cart_items
             );
         }

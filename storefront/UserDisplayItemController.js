@@ -343,7 +343,6 @@ async function setOrderSummaryDisplay(target, items) {
     // Compose the order summary    
     target.appendChild(ul);
     target.appendChild(order_total_container);
-
 }
 
 async function getOrderTotal() {
@@ -531,3 +530,14 @@ async function setOrderItemsDisplay(target, data) {
     target.appendChild(ul);
 }
 
+async function checkOrder(target_order_button, target_order_error, items) {
+    console.log("IN checkOrder");
+    items.forEach(
+        item => {
+            if (item["QUANT"] > item["STOCK"]) {
+                target_order_button.disabled = true;
+                target_order_error.textContent = "Please fix cart";
+            }
+        }
+    );
+}
