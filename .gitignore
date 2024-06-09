@@ -1,3 +1,4 @@
 /storefront/nbproject/
 /storefront/database/queries/
 *.odb
+*.bkp
