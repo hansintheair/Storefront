@@ -26,7 +26,7 @@
         </div>
         
         <div>            
-            <span id="registered"><?php echo isset($_SESSION["register_success"]) ? "Successfully registered" : "";?></span>
+            <span class="success" id="registered"><?php echo isset($_SESSION["register_success"]) ? "Successfully registered" : "";?></span>
             <h3>Already have an account?</h3>
             <button onclick="location.href='Home.php'">Log in</button>
         </div>
