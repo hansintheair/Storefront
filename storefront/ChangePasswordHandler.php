@@ -21,7 +21,7 @@ $store_db->disconnect();
 // Verify old password
 if (!(password_verify($old_password, $userdata["PASSWORD"]))) {
     $_SESSION["password_update_error"] = "Invalid email or password";
-    header("Location: Home.php");
+    header("Location: UserProfile.php");
    exit;
 }
 
