@@ -49,7 +49,7 @@
                             <input name="email" type="email" placeholder="New Email" pattern="^[A-Za-z0-9._\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$" title="invalid email address format" required>
                             <button type="submit">Save Changes</button>
                             <span class="error"><?php echo isset($_SESSION["email_update_error"]) ? $_SESSION["email_update_error"] : "";?></span>
-                            <span class="success"><?php echo isset($_SESSION["email_update_success"]) ? "Successfully registered" : "";?></span>
+                            <span class="success"><?php echo isset($_SESSION["email_update_success"]) ? "Successfully updated" : "";?></span>
                         </form>
                     </div>
                 </li>
@@ -61,7 +61,7 @@
                             <input name="new_password" type="password" placeholder="New Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,20})" title="Password must be at between 8 and 20 characters long, contain at least one of each: uppercase letter, lowercase letter, number, and special character !@#$%^&*" required>
                             <button type="submit">Save Changes</button>
                             <span class="error"><?php echo isset($_SESSION["password_update_error"]) ? $_SESSION["password_update_error"] : "";?></span>
-                            <span class="success"><?php echo isset($_SESSION["password_update_success"]) ? "Successfully registered" : "";?></span>
+                            <span class="success"><?php echo isset($_SESSION["password_update_success"]) ? "Successfully updated" : "";?></span>
                         </form>
                     </div>
                 </li>
